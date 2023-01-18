@@ -4,23 +4,23 @@ using System.Xml;
 public class XmlReader : MonoBehaviour
 {
     static public XmlReader S;
-    private XmlDocument saveX;
-    private string path;
+    private XmlDocument _saveX;
+    private string _path;
 
     private void Awake()
     {
         S = this;
         if (Application.platform == RuntimePlatform.Android)
-            path = Application.persistentDataPath;
+            _path = Application.persistentDataPath;
         else if (Application.platform == RuntimePlatform.WindowsEditor)
-            path = Application.dataPath;
+            _path = Application.dataPath;
     }
 
     public bool HasSave()
     {
-        saveX = new XmlDocument();
-        saveX.Load(path + "/SaveXML.xml");
-        XmlNode xml = saveX.SelectSingleNode("xml");
+        _saveX = new XmlDocument();
+        _saveX.Load(_path + "/SaveXML.xml");
+        XmlNode xml = _saveX.SelectSingleNode("xml");
         XmlNodeList levelNodeList = xml.SelectNodes("currentLevel");
         if (levelNodeList[0] != null)
             return true;
@@ -29,20 +29,20 @@ public class XmlReader : MonoBehaviour
     }
     public bool NoAddsMode()
     {
-        saveX = new XmlDocument();
-        saveX.Load(path + "/SaveXML.xml");
-        XmlNode xml = saveX.SelectSingleNode("xml");
+        _saveX = new XmlDocument();
+        _saveX.Load(_path + "/SaveXML.xml");
+        XmlNode xml = _saveX.SelectSingleNode("xml");
         XmlNodeList levelNodeList = xml.SelectNodes("settings");
         if (levelNodeList[0].Attributes["noAddsOn"].Value == "1")
             return true;
         else
             return false;
     }
-    public void LoadLevel(ref ColumnController[] columnsContr)
+    public void LoadLevel(ref Column[] columnsContr)
     {
-        saveX = new XmlDocument();
-        saveX.Load(path + "/SaveXML.xml");
-        XmlNode xml = saveX.SelectSingleNode("xml");
+        _saveX = new XmlDocument();
+        _saveX.Load(_path + "/SaveXML.xml");
+        XmlNode xml = _saveX.SelectSingleNode("xml");
         XmlNodeList levelNodeList = xml.SelectNodes("currentLevel");
         XmlElement levelElem = (XmlElement)levelNodeList[0];
         XmlNodeList chipsOnTableNodeList = levelElem.SelectNodes("chip");
@@ -115,21 +115,20 @@ public class XmlReader : MonoBehaviour
         SkillsController.S.SetSkillFilling(int.Parse(blueSkillNode.Attributes["count"].Value), int.Parse(blueSkillNode.Attributes["filling"].Value), eChipColors.blue);
         XmlNode purpleSkillNode = levelElem.SelectSingleNode("purpleSkill");
         SkillsController.S.SetSkillFilling(int.Parse(purpleSkillNode.Attributes["count"].Value), int.Parse(purpleSkillNode.Attributes["filling"].Value), eChipColors.purple);
-
     }
     public int GetMaxScore()
     {
-        saveX = new XmlDocument();
-        saveX.Load(path + "/SaveXML.xml");
-        XmlNode xml = saveX.SelectSingleNode("xml");
+        _saveX = new XmlDocument();
+        _saveX.Load(_path + "/SaveXML.xml");
+        XmlNode xml = _saveX.SelectSingleNode("xml");
         XmlNode scoreNode = xml.SelectSingleNode("maxScore");
         return int.Parse(scoreNode.Attributes["value"].Value);
     }
     public bool GetSoundsOn()
     {
-        saveX = new XmlDocument();
-        saveX.Load(path + "/SaveXML.xml");
-        XmlNode xml = saveX.SelectSingleNode("xml");
+        _saveX = new XmlDocument();
+        _saveX.Load(_path + "/SaveXML.xml");
+        XmlNode xml = _saveX.SelectSingleNode("xml");
         XmlNodeList nodeList = xml.SelectNodes("settings");
         if (int.Parse(nodeList[0].Attributes["soundsOn"].Value) == 1)
             return true;
@@ -138,9 +137,9 @@ public class XmlReader : MonoBehaviour
     }
     public bool GetMusicOn()
     {
-        saveX = new XmlDocument();
-        saveX.Load(path + "/SaveXML.xml");
-        XmlNode xml = saveX.SelectSingleNode("xml");
+        _saveX = new XmlDocument();
+        _saveX.Load(_path + "/SaveXML.xml");
+        XmlNode xml = _saveX.SelectSingleNode("xml");
         XmlNodeList nodeList = xml.SelectNodes("settings");
         if (int.Parse(nodeList[0].Attributes["musicOn"].Value) == 1)
             return true;

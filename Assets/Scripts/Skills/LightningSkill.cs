@@ -5,7 +5,7 @@ using DigitalRuby.LightningBolt;
 
 public class LightningSkill : SkillChip
 {
-    private List<ChipController> targets;
+    private List<Chip> targets;
     [SerializeField] private int targetsCount = 4;
     [SerializeField] private LightningBoltScript lightningScript;
     private MeshRenderer meshRenderer;
@@ -16,7 +16,7 @@ public class LightningSkill : SkillChip
 
     private void Start()
     {
-        targets = new List<ChipController>();
+        targets = new List<Chip>();
         meshRenderer = GetComponent<MeshRenderer>();
     }
 
@@ -51,13 +51,13 @@ public class LightningSkill : SkillChip
         float maxDistance = 3;
         int nearestChip = -1;
 
-        for(int i = 0; i < GameManager.S.chipsOnTable.Count; i++)
+        for(int i = 0; i < GameManager.S.ChipsOnTable.Count; i++)
         {
-            if ((currentChipPos - GameManager.S.chipsOnTable[i].transform.position).magnitude < maxDistance)
+            if ((currentChipPos - GameManager.S.ChipsOnTable[i].transform.position).magnitude < maxDistance)
             {
-                if (!targets.Contains(GameManager.S.chipsOnTable[i].GetComponent<ChipController>()))
+                if (!targets.Contains(GameManager.S.ChipsOnTable[i].GetComponent<Chip>()))
                 {
-                    maxDistance = (currentChipPos - GameManager.S.chipsOnTable[i].transform.position).magnitude;
+                    maxDistance = (currentChipPos - GameManager.S.ChipsOnTable[i].transform.position).magnitude;
                     nearestChip = i;
                 }
             }
@@ -69,8 +69,8 @@ public class LightningSkill : SkillChip
         }
         else
         {
-            targets.Add(GameManager.S.chipsOnTable[nearestChip].GetComponent<ChipController>());
-            return GameManager.S.chipsOnTable[nearestChip].transform.position;
+            targets.Add(GameManager.S.ChipsOnTable[nearestChip].GetComponent<Chip>());
+            return GameManager.S.ChipsOnTable[nearestChip].transform.position;
         }
     }
 
@@ -116,7 +116,7 @@ public class LightningSkill : SkillChip
                 {
                     if (targets[0] != null) //одна из целей может удалиться раньше, чем до нее дойдет цепная молния, в этом случае нужна проверка
                     {
-                        ScoreController.S.RaiseScore(targets[0].chipValue, targets[0].transform.position, targets[0].chipColor);
+                        ScoreController.S.RaiseScore(targets[0].СhipValue, targets[0].transform.position, targets[0].СhipColor);
                         targets[0].DestroyGO();
                     }
                     else

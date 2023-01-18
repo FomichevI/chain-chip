@@ -167,13 +167,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5eeefc5ec2de4e0478ca34f0344373d2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hitGreenPsPrefab: {fileID: 1040608886635896, guid: a97415c6b57076f41a6621a7b51d63a3, type: 3}
-  hitRedPsPrefab: {fileID: 7700508995639930168, guid: 631f87007b37a344fbbdd6a94dea8dca, type: 3}
-  hitPurplePsPrefab: {fileID: 7651166273055358827, guid: 64497776d69815d4da1c5ad1a012d104, type: 3}
-  hitBluePsPrefab: {fileID: 5844877875401160520, guid: a5713284798c61c4681570eadf12003a, type: 3}
-  fireExpPsPrefab: {fileID: 1134129239631916, guid: 7e48ba6b1b968764490bbc70b66e3fe1, type: 3}
-  frostExpPsPrefab: {fileID: 100000, guid: f2dba9e16cd347f44a395b8204544ee5, type: 3}
-  cristalHitPsPrefab: {fileID: 1845240806346120, guid: b395d5d6eb4b4b846acc021ee036b744, type: 3}
+  _hitGreenPsPrefab: {fileID: 1040608886635896, guid: a97415c6b57076f41a6621a7b51d63a3, type: 3}
+  _hitRedPsPrefab: {fileID: 7700508995639930168, guid: 631f87007b37a344fbbdd6a94dea8dca, type: 3}
+  _hitPurplePsPrefab: {fileID: 7651166273055358827, guid: 64497776d69815d4da1c5ad1a012d104, type: 3}
+  _hitBluePsPrefab: {fileID: 5844877875401160520, guid: a5713284798c61c4681570eadf12003a, type: 3}
+  _fireExpPsPrefab: {fileID: 1134129239631916, guid: 7e48ba6b1b968764490bbc70b66e3fe1, type: 3}
+  _frostExpPsPrefab: {fileID: 100000, guid: f2dba9e16cd347f44a395b8204544ee5, type: 3}
+  _cristalHitPsPrefab: {fileID: 1845240806346120, guid: b395d5d6eb4b4b846acc021ee036b744, type: 3}
 --- !u!114 &157030007 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 8109466166219906106, guid: 1072fc4504cc2274bb0224be4f8480a0, type: 3}
@@ -781,26 +781,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ae52f012510bbec449e669c031bc19f7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  chipsOnTable: []
-  force: 500
-  chipPrefab: {fileID: 821549885831176415, guid: 52681f487bf8f654fb7898e74a18cb9c, type: 3}
-  fireChipPrefab: {fileID: 2764449311368786370, guid: c9df5c5abb5fc8642b27ebcc92062531, type: 3}
-  frostChipPrefab: {fileID: 2764602158443381847, guid: ad135a5aaf8459d4e802681b45e85df5, type: 3}
-  lightningChipPrefab: {fileID: 2917609662154476625, guid: 0ddd81611903f2647b9b30a5957136b3, type: 3}
-  cristalChipPrefab: {fileID: 3552176746760271729, guid: 2efe8c3c2db0ac24f8f0abf5aede4fae, type: 3}
-  chipLayers:
-    serializedVersion: 2
-    m_Bits: 136
-  uiLayer:
+  ChipsOnTable: []
+  IsFailing: 0
+  _shootForce: 500
+  _chipPrefab: {fileID: 821549885831176415, guid: 52681f487bf8f654fb7898e74a18cb9c, type: 3}
+  _fireChipPrefab: {fileID: 2764449311368786370, guid: c9df5c5abb5fc8642b27ebcc92062531, type: 3}
+  _frostChipPrefab: {fileID: 2764602158443381847, guid: ad135a5aaf8459d4e802681b45e85df5, type: 3}
+  _lightningChipPrefab: {fileID: 2917609662154476625, guid: 0ddd81611903f2647b9b30a5957136b3, type: 3}
+  _cristalChipPrefab: {fileID: 3552176746760271729, guid: 2efe8c3c2db0ac24f8f0abf5aede4fae, type: 3}
+  _uiLayer:
     serializedVersion: 2
     m_Bits: 32
-  maxAngle: 60
-  minForceMultiplier: 0.5
-  columnControllers:
+  _maxShootAngle: 60
+  _minForceMultiplier: 0.5
+  _columnControllers:
   - {fileID: 687519007}
   - {fileID: 1448934595}
   - {fileID: 157030007}
-  isFailing: 0
 --- !u!114 &963194230
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1623,9 +1620,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7d165ad649c15214ba09a6b2b1eb6ddf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxDistance: 20
-  target: {fileID: 0}
-  bourdersLayer:
+  _maxDistance: 20
+  _bourdersLayer:
     serializedVersion: 2
     m_Bits: 64
 --- !u!120 &1968970738

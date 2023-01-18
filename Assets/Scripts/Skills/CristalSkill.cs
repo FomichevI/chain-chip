@@ -35,8 +35,8 @@ public class CristalSkill : SkillChip
         {
             if (currentTargets < maxTargets)
             {
-                ScoreController.S.RaiseScore(col.gameObject.GetComponent<ChipController>().chipValue, col.transform.position, col.gameObject.GetComponent<ChipController>().chipColor);
-                col.gameObject.GetComponent<ChipController>().DestroyGO();
+                ScoreController.S.RaiseScore(col.gameObject.GetComponent<Chip>().ÑhipValue, col.transform.position, col.gameObject.GetComponent<Chip>().ÑhipColor);
+                col.gameObject.GetComponent<Chip>().DestroyGO();
                 AudioManager.S.PlayUnification();
                 currentTargets++;
             }
