@@ -49,7 +49,7 @@ public class XmlReader : MonoBehaviour
 
         System.Globalization.CultureInfo ci = (System.Globalization.CultureInfo)System.Globalization.CultureInfo.CurrentCulture.Clone();
         ci.NumberFormat.CurrencyDecimalSeparator = ",";
-        //загружаем все фишки на столе
+        //Р·Р°РіСЂСѓР¶Р°РµРј РІСЃРµ С„РёС€РєРё РЅР° СЃС‚РѕР»Рµ
         for (int i = 0; i < chipsOnTableNodeList.Count; i++)
         {
             Vector3 pos = new Vector3(float.Parse(chipsOnTableNodeList[i].Attributes["posX"].Value, System.Globalization.NumberStyles.Any, ci),
@@ -68,7 +68,7 @@ public class XmlReader : MonoBehaviour
                 color = eChipColors.purple;
             GameManager.S.AddChip(pos, value, color);
         }
-        //загружаем фишку в стартовой точке
+        //Р·Р°РіСЂСѓР¶Р°РµРј С„РёС€РєСѓ РІ СЃС‚Р°СЂС‚РѕРІРѕР№ С‚РѕС‡РєРµ
         XmlNode currentChipNode = levelElem.SelectSingleNode("currentChip");
         string curCol = currentChipNode.Attributes["color"].Value;
         eChipColors currentColor;
@@ -89,7 +89,7 @@ public class XmlReader : MonoBehaviour
         {
             GameManager.S.SetSkillChip(currentColor);
         }
-        //загружаем столбы
+        //Р·Р°РіСЂСѓР¶Р°РµРј СЃС‚РѕР»Р±С‹
         XmlNode columnsNode = levelElem.SelectSingleNode("columns");
         if (int.Parse(columnsNode.Attributes["first"].Value) == 1)
         {
@@ -103,10 +103,10 @@ public class XmlReader : MonoBehaviour
         {
             columnsContr[2].SetUp();
         }
-        //загружаем счет
+        //Р·Р°РіСЂСѓР¶Р°РµРј СЃС‡РµС‚
         XmlNode currentScoreNode = levelElem.SelectSingleNode("currentScore");
         ScoreController.S.SetScoreAndStage(int.Parse(currentScoreNode.Attributes["value"].Value));
-        //загружаем заполнения скиллов
+        //Р·Р°РіСЂСѓР¶Р°РµРј Р·Р°РїРѕР»РЅРµРЅРёСЏ СЃРєРёР»Р»РѕРІ
         XmlNode greenSkillNode = levelElem.SelectSingleNode("greenSkill");
         SkillsController.S.SetSkillFilling(int.Parse(greenSkillNode.Attributes["count"].Value), int.Parse(greenSkillNode.Attributes["filling"].Value), eChipColors.green);
         XmlNode redSkillNode = levelElem.SelectSingleNode("redSkill");

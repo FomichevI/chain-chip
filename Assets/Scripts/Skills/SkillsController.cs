@@ -6,36 +6,34 @@ public class SkillsController : MonoBehaviour
 {
     public static SkillsController S;
 
-    [SerializeField] private Image fireFillingImg;
-    [SerializeField] private Image frostFillingImg;
-    [SerializeField] private Image lightningFillingImg;
-    [SerializeField] private Image cristalFillingImg;
+    public int MaxFillingSkills = 25;
+    //image для отображения заполнения скиллов
+    [SerializeField] private Image _fireFillingImg;
+    [SerializeField] private Image _frostFillingImg;
+    [SerializeField] private Image _lightningFillingImg;
+    [SerializeField] private Image _cristalFillingImg;
+    [SerializeField] private TextMeshProUGUI _fireSkillCountText;
+    [SerializeField] private TextMeshProUGUI _frostSkillCountText;
+    [SerializeField] private TextMeshProUGUI _lightningSkillCountText;
+    [SerializeField] private TextMeshProUGUI _cristalSkillCountText;
+    [SerializeField] private Button _fireSkillBtn;
+    [SerializeField] private Button _frostSkillBtn;
+    [SerializeField] private Button _lightningSkillBtn;
+    [SerializeField] private Button _cristalSkillBtn;
+    //эффекты, которые включаются при полном заполнении скилла
+    [SerializeField] private GameObject _fireSkillEffect;
+    [SerializeField] private GameObject _frostSkillEffect;
+    [SerializeField] private GameObject _lightningSkillEffect;
+    [SerializeField] private GameObject _cristalSkillEffect;
 
-    [SerializeField] private TextMeshProUGUI fireSkillCountText;
-    [SerializeField] private TextMeshProUGUI frostSkillCountText;
-    [SerializeField] private TextMeshProUGUI lightningSkillCountText;
-    [SerializeField] private TextMeshProUGUI cristalSkillCountText;
-
-    [SerializeField] private Button fireSkillBtn;
-    [SerializeField] private Button frostSkillBtn;
-    [SerializeField] private Button lightningSkillBtn;
-    [SerializeField] private Button cristalSkillBtn;
-
-    [SerializeField] private GameObject fireSkillEffect;
-    [SerializeField] private GameObject frostSkillEffect;
-    [SerializeField] private GameObject lightningSkillEffect;
-    [SerializeField] private GameObject cristalSkillEffect;
-
-    public int maxFillingSkills = 25;
-    private float currentFillingFireSkill = 0;
-    private float currentFillingFrostSkill = 0;
-    private float currentFillingLightningSkill = 0;
-    private float currentFillingCristalSkill = 0;
-
-    private int currentFireSkillCount = 0;
-    private int currentFrostSkillCount = 0;
-    private int currentCristalSkillCount = 0;
-    private int currentLightningSkillCount = 0;
+    private float _currentFillingFireSkill = 0;
+    private float _currentFillingFrostSkill = 0;
+    private float _currentFillingLightningSkill = 0;
+    private float _currentFillingCristalSkill = 0;
+    private int _currentFireSkillCount = 0;
+    private int _currentFrostSkillCount = 0;
+    private int _currentCristalSkillCount = 0;
+    private int _currentLightningSkillCount = 0;
 
     void Awake()
     {
@@ -43,216 +41,188 @@ public class SkillsController : MonoBehaviour
             S = this;
     }
 
-    public void RaiseSkillFilling(int value, eChipColors type)
+    public void IncreaseSkillFilling(int value, eChipColors type)
     {
+        ref float currentFillingSkill = ref _currentFillingFrostSkill;
+        ref int currentSkillCount = ref _currentFrostSkillCount;
+        ref Button skillBtn = ref _frostSkillBtn;
+        ref GameObject skillEffect = ref _frostSkillEffect;
+        ref Image fillingImg = ref _frostFillingImg;
+        ref TextMeshProUGUI skillCountText = ref _frostSkillCountText;
         switch (type)
         {
-            case eChipColors.blue:
-                currentFillingFrostSkill += value;
-                if (currentFillingFrostSkill >= maxFillingSkills)
-                {
-                    currentFrostSkillCount++;
-
-                    frostSkillCountText.text = currentFrostSkillCount.ToString();
-
-                    currentFillingFrostSkill -= maxFillingSkills;
-                    frostSkillBtn.interactable = true;
-                    frostSkillEffect.SetActive(true);
-                    Invoke("UnactiveFrostEffect", 1f);
-                    AudioManager.S.PlayFilling();
-                    MenuManager.S.lastSkillColor = type;
-                }
-                frostFillingImg.fillAmount = currentFillingFrostSkill / maxFillingSkills;
-                break;
             case eChipColors.green:
-                currentFillingCristalSkill += value;
-                if (currentFillingCristalSkill >= maxFillingSkills)
-                {
-                    currentCristalSkillCount++;
-
-                    cristalSkillCountText.text = currentCristalSkillCount.ToString();
-
-                    currentFillingCristalSkill -= maxFillingSkills;
-                    cristalSkillBtn.interactable = true;
-                    cristalSkillEffect.SetActive(true);
-                    Invoke("UnactiveCristalEffect", 1f);
-                    AudioManager.S.PlayFilling();
-                    MenuManager.S.lastSkillColor = type;
-                }
-                cristalFillingImg.fillAmount = currentFillingCristalSkill / maxFillingSkills;
+                currentFillingSkill = ref _currentFillingCristalSkill;
+                currentSkillCount =ref  _currentCristalSkillCount;
+                skillBtn =ref  _cristalSkillBtn;
+                skillEffect =ref  _cristalSkillEffect;
+                fillingImg =ref _cristalFillingImg;
+                skillCountText = ref _cristalSkillCountText;
                 break;
             case eChipColors.red:
-                currentFillingFireSkill += value;
-                if (currentFillingFireSkill >= maxFillingSkills)
-                {
-                    currentFireSkillCount++;
-
-                    fireSkillCountText.text = currentFireSkillCount.ToString();
-
-                    currentFillingFireSkill -= maxFillingSkills;
-                    fireSkillBtn.interactable = true;
-                    fireSkillEffect.SetActive(true);
-                    Invoke("UnactiveFireEffect", 1f);
-                    AudioManager.S.PlayFilling();
-                    MenuManager.S.lastSkillColor = type;
-                }
-                fireFillingImg.fillAmount = currentFillingFireSkill / maxFillingSkills;
+                currentFillingSkill = ref _currentFillingFireSkill;
+                currentSkillCount = ref _currentFireSkillCount;
+                skillBtn = ref _fireSkillBtn;
+                skillEffect = ref _fireSkillEffect;
+                fillingImg = ref _fireFillingImg;
+                skillCountText = ref _fireSkillCountText;
                 break;
             case eChipColors.purple:
-                currentFillingLightningSkill += value;
-                if (currentFillingLightningSkill >= maxFillingSkills)
-                {
-                    currentLightningSkillCount++;
-
-                    lightningSkillCountText.text = currentLightningSkillCount.ToString();
-
-                    currentFillingLightningSkill -= maxFillingSkills;
-                    lightningSkillBtn.interactable = true;
-                    lightningSkillEffect.SetActive(true);
-                    Invoke("UnactiveLightningEffect", 1f);
-                    AudioManager.S.PlayFilling();
-                    MenuManager.S.lastSkillColor = type;
-                }
-                lightningFillingImg.fillAmount = currentFillingLightningSkill / maxFillingSkills;
+                currentFillingSkill = ref _currentFillingLightningSkill;
+                currentSkillCount = ref _currentLightningSkillCount;
+                skillBtn = ref _lightningSkillBtn;
+                skillEffect = ref _lightningSkillEffect;
+                fillingImg = ref _lightningFillingImg;
+                skillCountText = ref _lightningSkillCountText;
                 break;
         }
+
+        currentFillingSkill += value;
+        if (currentFillingSkill >= MaxFillingSkills)
+        {
+            currentSkillCount++;
+
+            skillCountText.text = currentSkillCount.ToString();
+
+            currentFillingSkill -= MaxFillingSkills;
+            skillBtn.interactable = true;
+            skillEffect.SetActive(true);
+            Invoke("UnactiveFrostEffect", 1f);
+            AudioManager.S.PlayFilling();
+            MenuManager.S.LastSkillColor = type;
+        }
+        fillingImg.fillAmount = currentFillingSkill / MaxFillingSkills;
     }
 
     public void SetSkillFilling(int count, int value, eChipColors type)
     {
+        ref float currentFillingSkill = ref _currentFillingFrostSkill;
+        ref int currentSkillCount = ref _currentFrostSkillCount;
+        ref Button skillBtn = ref _frostSkillBtn;
+        ref Image fillingImg = ref _frostFillingImg;
+        ref TextMeshProUGUI skillCountText = ref _frostSkillCountText;
         switch (type)
         {
-            case eChipColors.blue:
-                currentFillingFrostSkill = value;
-                if (count > 0)
-                {
-                    currentFrostSkillCount = count;
-                    frostSkillBtn.interactable = true;
-                }
-                frostSkillCountText.text = currentFrostSkillCount.ToString();
-                frostFillingImg.fillAmount = currentFillingFrostSkill / maxFillingSkills;
-                break;
             case eChipColors.green:
-                currentFillingCristalSkill = value;
-                if (count > 0)
-                {
-                    currentCristalSkillCount = count;
-                    cristalSkillBtn.interactable = true;
-                }
-                cristalSkillCountText.text = currentCristalSkillCount.ToString();
-                cristalFillingImg.fillAmount = currentFillingCristalSkill / maxFillingSkills;
+                currentFillingSkill =ref _currentFillingCristalSkill;
+                currentSkillCount = ref _currentCristalSkillCount;
+                skillBtn = ref _cristalSkillBtn;
+                fillingImg = ref _cristalFillingImg;
+                skillCountText = ref _cristalSkillCountText;
                 break;
             case eChipColors.red:
-                currentFillingFireSkill = value;
-                if (count > 0)
-                {
-                    currentFireSkillCount = count;
-                    fireSkillBtn.interactable = true;
-                }
-                fireSkillCountText.text = currentFireSkillCount.ToString();
-                fireFillingImg.fillAmount = currentFillingFireSkill / maxFillingSkills;
+                currentFillingSkill = ref _currentFillingFireSkill;
+                currentSkillCount = ref _currentFireSkillCount;
+                skillBtn = ref _fireSkillBtn;
+                fillingImg = ref _fireFillingImg;
+                skillCountText = ref _fireSkillCountText;
                 break;
             case eChipColors.purple:
-                currentFillingLightningSkill = value;
-                if (count > 0)
-                {
-                    currentLightningSkillCount = count;
-                    lightningSkillBtn.interactable = true;
-                }
-                lightningSkillCountText.text = currentLightningSkillCount.ToString();
-                lightningFillingImg.fillAmount = currentFillingLightningSkill / maxFillingSkills;
+                currentFillingSkill = ref _currentFillingLightningSkill;
+                currentSkillCount = ref _currentLightningSkillCount;
+                skillBtn = ref _lightningSkillBtn;
+                fillingImg = ref _lightningFillingImg;
+                skillCountText = ref _lightningSkillCountText;
                 break;
         }
-    }
 
+        currentFillingSkill = value;
+        if (count > 0)
+        {
+            currentSkillCount = count;
+            skillBtn.interactable = true;
+        }
+        skillCountText.text = currentSkillCount.ToString();
+        fillingImg.fillAmount = currentFillingSkill / MaxFillingSkills;
+    }
     public void UseFireSkill()
     {
-        if (currentFireSkillCount > 0)
+        if (_currentFireSkillCount > 0)
         {
-            currentFireSkillCount -= 1;
-            fireSkillCountText.text = currentFireSkillCount.ToString();
+            _currentFireSkillCount -= 1;
+            _fireSkillCountText.text = _currentFireSkillCount.ToString();
             GameManager.S.SetSkillChip(eChipColors.red);
-            if (currentFireSkillCount == 0)
+            if (_currentFireSkillCount == 0)
             {
-                fireSkillBtn.interactable = false;
+                _fireSkillBtn.interactable = false;
             }
         }
     }
     public void UseFrostSkill()
     {
-        if (currentFrostSkillCount > 0)
+        if (_currentFrostSkillCount > 0)
         {
-            currentFrostSkillCount -= 1;
-            frostSkillCountText.text = currentFrostSkillCount.ToString();
+            _currentFrostSkillCount -= 1;
+            _frostSkillCountText.text = _currentFrostSkillCount.ToString();
             GameManager.S.SetSkillChip(eChipColors.blue);
-            if (currentFrostSkillCount == 0)
+            if (_currentFrostSkillCount == 0)
             {
-                frostSkillBtn.interactable = false;
+                _frostSkillBtn.interactable = false;
             }
         }
     }
     public void UseLightningSkill()
     {
-        if (currentLightningSkillCount > 0)
+        if (_currentLightningSkillCount > 0)
         {
-            currentLightningSkillCount -= 1;
-            lightningSkillCountText.text = currentLightningSkillCount.ToString();
+            _currentLightningSkillCount -= 1;
+            _lightningSkillCountText.text = _currentLightningSkillCount.ToString();
             GameManager.S.SetSkillChip(eChipColors.purple);
-            if (currentLightningSkillCount == 0)
+            if (_currentLightningSkillCount == 0)
             {
-                lightningSkillBtn.interactable = false;
+                _lightningSkillBtn.interactable = false;
             }
         }
     }
     public void UseCristalSkill()
     {
-        if (currentCristalSkillCount > 0)
+        if (_currentCristalSkillCount > 0)
         {
-            currentCristalSkillCount -= 1;
-            cristalSkillCountText.text = currentCristalSkillCount.ToString();
+            _currentCristalSkillCount -= 1;
+            _cristalSkillCountText.text = _currentCristalSkillCount.ToString();
             GameManager.S.SetSkillChip(eChipColors.green);
-            if (currentCristalSkillCount == 0)
+            if (_currentCristalSkillCount == 0)
             {
-                cristalSkillBtn.interactable = false;
+                _cristalSkillBtn.interactable = false;
             }
         }
     }
     public float GetFilling(eChipColors color)
     {
         if (color == eChipColors.green)
-            return currentFillingCristalSkill;
+            return _currentFillingCristalSkill;
         else if (color == eChipColors.red)
-            return currentFillingFireSkill;
+            return _currentFillingFireSkill;
         else if (color == eChipColors.blue)
-            return currentFillingFrostSkill;
+            return _currentFillingFrostSkill;
         else
-            return currentFillingLightningSkill;
+            return _currentFillingLightningSkill;
     }
     public int GetCount(eChipColors color)
     {
         if (color == eChipColors.green)
-            return currentCristalSkillCount;
+            return _currentCristalSkillCount;
         else if (color == eChipColors.red)
-            return currentFireSkillCount;
+            return _currentFireSkillCount;
         else if (color == eChipColors.blue)
-            return currentFrostSkillCount;
+            return _currentFrostSkillCount;
         else
-            return currentLightningSkillCount;
+            return _currentLightningSkillCount;
     }
     public void UnactiveFireEffect()
     {
-        fireSkillEffect.SetActive(false);
+        _fireSkillEffect.SetActive(false);
     }
     public void UnactiveFrostEffect()
     {
-        frostSkillEffect.SetActive(false);
+        _frostSkillEffect.SetActive(false);
     }
     public void UnactiveCristalEffect()
     {
-        cristalSkillEffect.SetActive(false);
+        _cristalSkillEffect.SetActive(false);
     }
     public void UnactiveLightningEffect()
     {
-        lightningSkillEffect.SetActive(false);
+        _lightningSkillEffect.SetActive(false);
     }
 }

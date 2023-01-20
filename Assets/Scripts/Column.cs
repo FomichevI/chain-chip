@@ -41,7 +41,7 @@ public class Column : MonoBehaviour
         {
             if (other.gameObject.layer == 3)
             {
-                EffectsController.S.ShowHitEffect(other.transform.position, other.GetComponent<Chip>().СhipColor);
+                EffectsController.S.ShowHitEffect(other.transform.position, other.GetComponent<Chip>().РЎhipColor);
                 Destroy(other.gameObject);
             }
         }
@@ -51,19 +51,19 @@ public class Column : MonoBehaviour
     {
         if (transform.position.y != 0)
             _isMovingUp = true;
-        if (_isMovingDown) //мы сначала даем сигнал всем колоннам опускаться, так что эта проверка необходима
+        if (_isMovingDown) //РјС‹ СЃРЅР°С‡Р°Р»Р° РґР°РµРј СЃРёРіРЅР°Р» РІСЃРµРј РєРѕР»РѕРЅРЅР°Рј РѕРїСѓСЃРєР°С‚СЊСЃСЏ, С‚Р°Рє С‡С‚Рѕ СЌС‚Р° РїСЂРѕРІРµСЂРєР° РЅРµРѕР±С…РѕРґРёРјР°
             _isMovingDown = false;
-        gameObject.layer = 6; //превращаем колонны в стенки
+        gameObject.layer = 6; //РїСЂРµРІСЂР°С‰Р°РµРј РєРѕР»РѕРЅРЅС‹ РІ СЃС‚РµРЅРєРё
     }
 
     public void MoveDown()
     {
         if (transform.position.y != -1)
             _isMovingDown = true;
-        gameObject.layer = 0; //превращаем колонны в обычный объект
+        gameObject.layer = 0; //РїСЂРµРІСЂР°С‰Р°РµРј РєРѕР»РѕРЅРЅС‹ РІ РѕР±С‹С‡РЅС‹Р№ РѕР±СЉРµРєС‚
     }
 
-    public void SetUp() //установить сразу в поднятом состоянии
+    public void SetUp() //СѓСЃС‚Р°РЅРѕРІРёС‚СЊ СЃСЂР°Р·Сѓ РІ РїРѕРґРЅСЏС‚РѕРј СЃРѕСЃС‚РѕСЏРЅРёРё
     {
         transform.position = new Vector3(transform.position.x, 0, transform.position.z);
         gameObject.layer = 6;

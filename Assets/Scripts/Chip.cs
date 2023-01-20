@@ -7,9 +7,9 @@ public class Chip : MonoBehaviour
     public bool IsOnTable = false;
 
     private Rigidbody _rb;
-    private eChipColors _chipColor = eChipColors.green; public eChipColors СhipColor { get { return _chipColor; } }
-    private int _chipValue = 1; public int СhipValue { get { return _chipValue; } }
-    private float _timeUntilGameOver = 1f; //время, которая фишка должна провести за пределами поля для окончания игры
+    private eChipColors _chipColor = eChipColors.green; public eChipColors РЎhipColor { get { return _chipColor; } }
+    private int _chipValue = 1; public int РЎhipValue { get { return _chipValue; } }
+    private float _timeUntilGameOver = 1f; //РІСЂРµРјСЏ, РєРѕС‚РѕСЂР°СЏ С„РёС€РєР° РґРѕР»Р¶РЅР° РїСЂРѕРІРµСЃС‚Рё Р·Р° РїСЂРµРґРµР»Р°РјРё РїРѕР»СЏ РґР»СЏ РѕРєРѕРЅС‡Р°РЅРёСЏ РёРіСЂС‹
     private bool _isUsed = false;
 
 
@@ -65,12 +65,12 @@ public class Chip : MonoBehaviour
     {
         if (_rb.velocity.z < 0)
         {
-            float multiplay = 0.87f + transform.position.z / 100; //чем ближе к границе, тем сильнее замедление
-            _rb.velocity = new Vector3(_rb.velocity.x, _rb.velocity.y, _rb.velocity.z * multiplay); // замедляем, чтобы фишки не вылетали с поля слишком легко
+            float multiplay = 0.87f + transform.position.z / 100; //С‡РµРј Р±Р»РёР¶Рµ Рє РіСЂР°РЅРёС†Рµ, С‚РµРј СЃРёР»СЊРЅРµРµ Р·Р°РјРµРґР»РµРЅРёРµ
+            _rb.velocity = new Vector3(_rb.velocity.x, _rb.velocity.y, _rb.velocity.z * multiplay); // Р·Р°РјРµРґР»СЏРµРј, С‡С‚РѕР±С‹ С„РёС€РєРё РЅРµ РІС‹Р»РµС‚Р°Р»Рё СЃ РїРѕР»СЏ СЃР»РёС€РєРѕРј Р»РµРіРєРѕ
         }
     }
 
-    private static T GetRandomEnum<T>() //возвращает случайный член перечеслителя Enum
+    private static T GetRandomEnum<T>() //РІРѕР·РІСЂР°С‰Р°РµС‚ СЃР»СѓС‡Р°Р№РЅС‹Р№ С‡Р»РµРЅ РїРµСЂРµС‡РµСЃР»РёС‚РµР»СЏ Enum
     {
         System.Array A = System.Enum.GetValues(typeof(T));
         T V = (T)A.GetValue(Random.Range(0, A.Length - 1));
@@ -88,7 +88,7 @@ public class Chip : MonoBehaviour
         SetValue(_chipValue + 1);
     }
 
-    private void OnTriggerStay(Collider other) //обрабатываем выход фишки за пределы игрового поля
+    private void OnTriggerStay(Collider other) //РѕР±СЂР°Р±Р°С‚С‹РІР°РµРј РІС‹С…РѕРґ С„РёС€РєРё Р·Р° РїСЂРµРґРµР»С‹ РёРіСЂРѕРІРѕРіРѕ РїРѕР»СЏ
     {
         if (IsOnTable && other.gameObject.tag == "EndZone" && _timeUntilGameOver > 0)
             _timeUntilGameOver -= Time.deltaTime;
@@ -104,27 +104,29 @@ public class Chip : MonoBehaviour
     private void OnCollisionEnter(Collision collision) { TouchWithCollision(collision); }
     private void TouchWithCollision(Collision coll)
     {
-        if (coll.gameObject.layer == 3) //обрабатываем столкновения с другими фишками
+        if (coll.gameObject.layer == 3) //РѕР±СЂР°Р±Р°С‚С‹РІР°РµРј СЃС‚РѕР»РєРЅРѕРІРµРЅРёСЏ СЃ РґСЂСѓРіРёРјРё С„РёС€РєР°РјРё
         {
-            Chip targetCC = coll.gameObject.GetComponent<Chip>();
-            if (targetCC.СhipColor == СhipColor && targetCC.СhipValue == СhipValue)
+            if (!coll.gameObject.GetComponent<Chip>()) //РЅР° СЃР»СѓС‡Р°Р№ СЃС‚РѕР»РєРЅРѕРІРµРЅРёСЏ СЃ С„РёС€РєРѕР№ СЃРєРёР»Р»Р°
+                return;
+            Chip targetC = coll.gameObject.GetComponent<Chip>();
+            if (targetC.РЎhipColor == РЎhipColor && targetC.РЎhipValue == РЎhipValue)
             {
-                if (_rb.velocity.magnitude >= targetCC._rb.velocity.magnitude) //проверка, чтобы фишки отлетали всегда в нужную сторону
+                if (_rb.velocity.magnitude >= targetC._rb.velocity.magnitude) //РїСЂРѕРІРµСЂРєР°, С‡С‚РѕР±С‹ С„РёС€РєРё РѕС‚Р»РµС‚Р°Р»Рё РІСЃРµРіРґР° РІ РЅСѓР¶РЅСѓСЋ СЃС‚РѕСЂРѕРЅСѓ
                 {
                     if (!_isUsed)
                     {
                         _isUsed = true;
-                        if (СhipValue == 6)
+                        if (РЎhipValue == 6)
                         {
-                            targetCC.DestroyGO();
+                            targetC.DestroyGO();
                             DestroyGO();
                         }
                         else
                         {
-                            targetCC.RaiseValue();
+                            targetC.RaiseValue();
                         }
-                        SkillsController.S.RaiseSkillFilling(СhipValue, СhipColor);
-                        ScoreController.S.RaiseScore(СhipValue, transform.position, СhipColor);
+                        SkillsController.S.IncreaseSkillFilling(РЎhipValue, РЎhipColor);
+                        ScoreController.S.RaiseScore(РЎhipValue, transform.position, РЎhipColor);
                         DestroyGO();
                         AudioManager.S.PlayUnification();
                     }
@@ -135,7 +137,7 @@ public class Chip : MonoBehaviour
 
     public void DestroyGO()
     {
-        EffectsController.S.ShowHitEffect(transform.position, СhipColor);
+        EffectsController.S.ShowHitEffect(transform.position, РЎhipColor);
         Destroy(gameObject);
     }
     private void OnDestroy()

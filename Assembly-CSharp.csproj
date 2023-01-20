@@ -67,12 +67,10 @@
     <Compile Include="Assets\Scripts\Skills\FireSkill.cs" />
     <Compile Include="Assets\Scripts\Skills\CristalSkill.cs" />
     <Compile Include="Assets\Scripts\UI\ScoreController.cs" />
-    <Compile Include="Assets\Scripts\UI\UnityAdsManager.cs" />
     <Compile Include="Assets\Scripts\UI\MenuManager.cs" />
     <Compile Include="Assets\Scripts\Skills\SkillChip.cs" />
     <Compile Include="Assets\Effects\LightningBolt\LightningBoltScript.cs" />
     <Compile Include="Assets\Scripts\UI\LanguageChanger.cs" />
-    <Compile Include="Assets\Scripts\UI\ThemeChanger.cs" />
     <Compile Include="Assets\Scripts\AimLine.cs" />
     <Compile Include="Assets\GPS.cs" />
     <Compile Include="Assets\Effects\JMO Assets\Cartoon FX\Scripts\CFX_LightFlicker.cs" />

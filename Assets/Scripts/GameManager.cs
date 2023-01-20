@@ -10,13 +10,14 @@ public class GameManager : MonoBehaviour
     [HideInInspector] public List<GameObject> ChipsOnTable;
     [HideInInspector] public bool IsFailing = false;
 
-    [SerializeField] private float _shootForce = 500; //сила запуска фишки
+    [SerializeField] private float _shootForce = 500; //СЃРёР»Р° Р·Р°РїСѓСЃРєР° С„РёС€РєРё
     [SerializeField] private GameObject _chipPrefab;
     [SerializeField] private GameObject _fireChipPrefab;
     [SerializeField] private GameObject _frostChipPrefab;
     [SerializeField] private GameObject _lightningChipPrefab;
     [SerializeField] private GameObject _cristalChipPrefab;
 
+    [SerializeField] private LayerMask _chipsLayer;
     [SerializeField] private LayerMask _uiLayer;
     [SerializeField] private float _maxShootAngle = 60;
     [SerializeField] private float _minForceMultiplier = 0.5f;
@@ -25,7 +26,7 @@ public class GameManager : MonoBehaviour
     private GameObject _currentChip;
     private GameObject _chipOnStartPosition;
     private Vector3 _startPos;
-    private float _maxShootDistance = 1.5f; //максимальное расстояние, на которое можем оттянуть фишку
+    private float _maxShootDistance = 1.5f; //РјР°РєСЃРёРјР°Р»СЊРЅРѕРµ СЂР°СЃСЃС‚РѕСЏРЅРёРµ, РЅР° РєРѕС‚РѕСЂРѕРµ РјРѕР¶РµРј РѕС‚С‚СЏРЅСѓС‚СЊ С„РёС€РєСѓ
     private bool _isSpawningNewChip = false;
 
     private void Awake()
@@ -45,7 +46,7 @@ public class GameManager : MonoBehaviour
         }
         else
         {
-            if (XmlReader.S.GetMaxScore() == 0) //если нет сохраненного уровня и не найдено никакого результата в сохранениях, то начинаем игру с панели меню
+            if (XmlReader.S.GetMaxScore() == 0) //РµСЃР»Рё РЅРµС‚ СЃРѕС…СЂР°РЅРµРЅРЅРѕРіРѕ СѓСЂРѕРІРЅСЏ Рё РЅРµ РЅР°Р№РґРµРЅРѕ РЅРёРєР°РєРѕРіРѕ СЂРµР·СѓР»СЊС‚Р°С‚Р° РІ СЃРѕС…СЂР°РЅРµРЅРёСЏС…, С‚Рѕ РЅР°С‡РёРЅР°РµРј РёРіСЂСѓ СЃ РїР°РЅРµР»Рё РјРµРЅСЋ
                 MenuManager.S.ShowMenuPanel();
             GameObject chipGO = Instantiate(_chipPrefab, _startPos, Quaternion.Euler(Vector3.zero));
             chipGO.GetComponent<Chip>().SetColorAndValue();
@@ -64,12 +65,19 @@ public class GameManager : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetMouseButtonDown(0)) //если мы только что нажали, то захватываем фишку под курсором
+        if (Input.GetMouseButtonDown(0)) //РµСЃР»Рё РјС‹ С‚РѕР»СЊРєРѕ С‡С‚Рѕ РЅР°Р¶Р°Р»Рё, С‚Рѕ Р·Р°С…РІР°С‚С‹РІР°РµРј С„РёС€РєСѓ РїРѕРґ РєСѓСЂСЃРѕСЂРѕРј
         {
             RaycastHit hit;
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            if (Physics.Raycast(ray, out hit, 50) && hit.transform != null)
+            if (Physics.Raycast(ray, out hit, 50, _chipsLayer) && hit.transform != null)
             {
+                //РґРІРµ РїСЂРѕРІРµСЂРєРё, РЅРµРѕР±С…РѕРґРёРјС‹Рµ РґР»СЏ С‚РѕРіРѕ, С‡С‚РѕР±С‹ РёР·Р±РµР¶Р°С‚СЊ Р·Р°С…РІР°С‚Р° С„РёС€РєРё С‡РµСЂРµР· СЌР»РµРјРµРЅС‚С‹ UI
+                if (EventSystem.current.IsPointerOverGameObject())
+                    return;
+                if (Input.touchCount > 0)
+                    if (EventSystem.current.IsPointerOverGameObject(Input.GetTouch(0).fingerId))
+                        return;
+
                 if (hit.transform.GetComponent<Chip>())
                 {
                     if (!hit.transform.GetComponent<Chip>().IsOnTable)
@@ -77,7 +85,7 @@ public class GameManager : MonoBehaviour
                 }
                 else if (hit.transform.GetComponent<SkillChip>())
                 {
-                    if (!hit.transform.GetComponent<SkillChip>().onTable)
+                    if (!hit.transform.GetComponent<SkillChip>().OnTable)
                         _currentChip = hit.transform.gameObject;
                 }
             }
@@ -85,14 +93,14 @@ public class GameManager : MonoBehaviour
                 AimLine.S.SetTarget(_currentChip.transform);
         }
 
-        if (Input.GetMouseButton(0) && _currentChip != null) //если мы уже удерживаем фишку, то перемещаем ее вслед за курсором
+        if (Input.GetMouseButton(0) && _currentChip != null) //РµСЃР»Рё РјС‹ СѓР¶Рµ СѓРґРµСЂР¶РёРІР°РµРј С„РёС€РєСѓ, С‚Рѕ РїРµСЂРµРјРµС‰Р°РµРј РµРµ РІСЃР»РµРґ Р·Р° РєСѓСЂСЃРѕСЂРѕРј
         {
             Vector3 mousePosition = Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, Camera.main.transform.position.y));
             mousePosition.y = _currentChip.transform.position.y;
-            //ограничение перемещения по Z
+            //РѕРіСЂР°РЅРёС‡РµРЅРёРµ РїРµСЂРµРјРµС‰РµРЅРёСЏ РїРѕ Z
             if (mousePosition.z > 0)
                 mousePosition.z = 0;
-            //ограничение перемещения по углу поворота фишки
+            //РѕРіСЂР°РЅРёС‡РµРЅРёРµ РїРµСЂРµРјРµС‰РµРЅРёСЏ РїРѕ СѓРіР»Сѓ РїРѕРІРѕСЂРѕС‚Р° С„РёС€РєРё
             float angle = Vector3.Angle((mousePosition - _startPos), new Vector3(0, 0.6f, -1.5f));
             if (angle >= _maxShootAngle)
             {
@@ -101,39 +109,39 @@ public class GameManager : MonoBehaviour
                 else
                     mousePosition.x = mousePosition.z * Mathf.Tan(Mathf.Deg2Rad * (-_maxShootAngle));
             }
-            //ограничение по дальности натяжения фишки
+            //РѕРіСЂР°РЅРёС‡РµРЅРёРµ РїРѕ РґР°Р»СЊРЅРѕСЃС‚Рё РЅР°С‚СЏР¶РµРЅРёСЏ С„РёС€РєРё
             float currentDistance = (mousePosition - _startPos).magnitude;
             if (currentDistance >= _maxShootDistance)
             {
                 mousePosition.x = mousePosition.x * _maxShootDistance / currentDistance;
                 mousePosition.z = mousePosition.z * _maxShootDistance / currentDistance;
             }
-            //огранечение скорости перемещения фишки
+            //РѕРіСЂР°РЅРµС‡РµРЅРёРµ СЃРєРѕСЂРѕСЃС‚Рё РїРµСЂРµРјРµС‰РµРЅРёСЏ С„РёС€РєРё
             _currentChip.GetComponent<Rigidbody>().MovePosition(Vector3.MoveTowards(_currentChip.transform.position, mousePosition, 0.3f));
-            AimLine.S.ShowLine(_startPos); //обновляем линию прицеливания
+            AimLine.S.ShowLine(_startPos); //РѕР±РЅРѕРІР»СЏРµРј Р»РёРЅРёСЋ РїСЂРёС†РµР»РёРІР°РЅРёСЏ
         }
 
-        if (Input.GetMouseButtonUp(0) && _currentChip != null) //если отпустили кнопку, то запускаем фишку на игровое поле
+        if (Input.GetMouseButtonUp(0) && _currentChip != null) //РµСЃР»Рё РѕС‚РїСѓСЃС‚РёР»Рё РєРЅРѕРїРєСѓ, С‚Рѕ Р·Р°РїСѓСЃРєР°РµРј С„РёС€РєСѓ РЅР° РёРіСЂРѕРІРѕРµ РїРѕР»Рµ
         {
-            //назначаем мультипликатор, чтобы фишки не вылетали слишком медленно
-            //мультипликатор зависит от расстояния между начальной точкой спавна фишки и ее текущим положением
+            //РЅР°Р·РЅР°С‡Р°РµРј РјСѓР»СЊС‚РёРїР»РёРєР°С‚РѕСЂ, С‡С‚РѕР±С‹ С„РёС€РєРё РЅРµ РІС‹Р»РµС‚Р°Р»Рё СЃР»РёС€РєРѕРј РјРµРґР»РµРЅРЅРѕ
+            //РјСѓР»СЊС‚РёРїР»РёРєР°С‚РѕСЂ Р·Р°РІРёСЃРёС‚ РѕС‚ СЂР°СЃСЃС‚РѕСЏРЅРёСЏ РјРµР¶РґСѓ РЅР°С‡Р°Р»СЊРЅРѕР№ С‚РѕС‡РєРѕР№ СЃРїР°РІРЅР° С„РёС€РєРё Рё РµРµ С‚РµРєСѓС‰РёРј РїРѕР»РѕР¶РµРЅРёРµРј
             float forceMultiplier = (_currentChip.transform.position - _startPos).magnitude;
             if (forceMultiplier < _minForceMultiplier)
                 forceMultiplier = _minForceMultiplier;
-            //определяем направление запуска фишки
+            //РѕРїСЂРµРґРµР»СЏРµРј РЅР°РїСЂР°РІР»РµРЅРёРµ Р·Р°РїСѓСЃРєР° С„РёС€РєРё
             if (_currentChip.transform.position != _startPos)
                 _currentChip.GetComponent<Rigidbody>().AddForce((_startPos - _currentChip.transform.position).normalized * forceMultiplier * _shootForce);
             else
                 _currentChip.GetComponent<Rigidbody>().AddForce(_currentChip.transform.forward.normalized * forceMultiplier * _shootForce);
-            //выполняем дествия, которые зависят от того, запустили мы обычную фишку, или скилл
+            //РІС‹РїРѕР»РЅСЏРµРј РґРµСЃС‚РІРёСЏ, РєРѕС‚РѕСЂС‹Рµ Р·Р°РІРёСЃСЏС‚ РѕС‚ С‚РѕРіРѕ, Р·Р°РїСѓСЃС‚РёР»Рё РјС‹ РѕР±С‹С‡РЅСѓСЋ С„РёС€РєСѓ, РёР»Рё СЃРєРёР»Р»
             if (_currentChip.transform.GetComponent<Chip>())
             {
                 _currentChip.GetComponent<Chip>().IsOnTable = true;
-                ChipsOnTable.Add(_currentChip); //добавляем фишку в список
+                ChipsOnTable.Add(_currentChip); //РґРѕР±Р°РІР»СЏРµРј С„РёС€РєСѓ РІ СЃРїРёСЃРѕРє
             }
             else if (_currentChip.transform.GetComponent<SkillChip>())
             {
-                _currentChip.GetComponent<SkillChip>().onTable = true;
+                _currentChip.GetComponent<SkillChip>().OnTable = true;
             }
 
             _currentChip = null;

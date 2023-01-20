@@ -8,7 +8,7 @@ public class AimLine : MonoBehaviour
     [SerializeField] LayerMask _bourdersLayer;
     private LineRenderer _line;
     private Transform _target;
-    private Vector3 _center; //вторая точка для определения направления линии
+    private Vector3 _center; //РІС‚РѕСЂР°СЏ С‚РѕС‡РєР° РґР»СЏ РѕРїСЂРµРґРµР»РµРЅРёСЏ РЅР°РїСЂР°РІР»РµРЅРёСЏ Р»РёРЅРёРё
 
     private void Start()
     {
@@ -28,10 +28,10 @@ public class AimLine : MonoBehaviour
 
 
             _line.positionCount = 2;
-            //устанавливаем первую точку
-            _line.SetPosition(0, new Vector3(0, 0.3f, 0)); //для нормального отображения линии
+            //СѓСЃС‚Р°РЅР°РІР»РёРІР°РµРј РїРµСЂРІСѓСЋ С‚РѕС‡РєСѓ
+            _line.SetPosition(0, new Vector3(0, 0.3f, 0)); //РґР»СЏ РЅРѕСЂРјР°Р»СЊРЅРѕРіРѕ РѕС‚РѕР±СЂР°Р¶РµРЅРёСЏ Р»РёРЅРёРё
 
-            //устанавливаем вторую точку
+            //СѓСЃС‚Р°РЅР°РІР»РёРІР°РµРј РІС‚РѕСЂСѓСЋ С‚РѕС‡РєСѓ
             Ray ray;
             if (_center != transform.position)
                 ray = new Ray(transform.position, (_center - transform.position));
@@ -39,13 +39,13 @@ public class AimLine : MonoBehaviour
                 ray = new Ray(transform.position, transform.forward);
             RaycastHit hit;
             if (Physics.Raycast(ray, out hit, _maxDistance, _bourdersLayer))
-                _line.SetPosition(1, hit.point - new Vector3(transform.position.x, 0, transform.position.z)); //проблема в этой точке во время приближения
+                _line.SetPosition(1, hit.point - new Vector3(transform.position.x, 0, transform.position.z)); //РїСЂРѕР±Р»РµРјР° РІ СЌС‚РѕР№ С‚РѕС‡РєРµ РІРѕ РІСЂРµРјСЏ РїСЂРёР±Р»РёР¶РµРЅРёСЏ
         }
     }
 
     public void ShowLine(Vector3 center)
     {
-        _center = new Vector3(center.x, 0.3f, center.z); //для нормального отображения линии
+        _center = new Vector3(center.x, 0.3f, center.z); //РґР»СЏ РЅРѕСЂРјР°Р»СЊРЅРѕРіРѕ РѕС‚РѕР±СЂР°Р¶РµРЅРёСЏ Р»РёРЅРёРё
         _line.enabled = true;
     }
 

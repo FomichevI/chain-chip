@@ -2,10 +2,9 @@ using UnityEngine;
 
 public class SkillChip : MonoBehaviour
 {
-    public bool onTable = false;
-    public LayerMask chipsLayer;
-    public eChipColors color;
-    //public LayerMask bourdersLayer;
+    public bool OnTable = false;
+    public LayerMask ChipsLayer;
+    public eChipColors Color;
 
     protected Rigidbody rb;
 
@@ -17,7 +16,7 @@ public class SkillChip : MonoBehaviour
     {
         if (rb.velocity.z < 0)
         {
-            rb.velocity = new Vector3(rb.velocity.x, rb.velocity.y, rb.velocity.z * 0.93f); // çàìåäëÿåì, ÷òîáû ôèøêè íå âûëåòàëè ñ ïîëÿ ñëèøêîì ëåãêî
+            rb.velocity = new Vector3(rb.velocity.x, rb.velocity.y, rb.velocity.z * 0.93f); //Ð·Ð°Ð¼ÐµÐ´Ð»ÑÐµÐ¼, Ñ‡Ñ‚Ð¾Ð±Ñ‹ Ñ„Ð¸ÑˆÐºÐ¸ Ð½Ðµ Ð²Ñ‹Ð»ÐµÑ‚Ð°Ð»Ð¸ Ñ Ð¿Ð¾Ð»Ñ ÑÐ»Ð¸ÑˆÐºÐ¾Ð¼ Ð»ÐµÐ³ÐºÐ¾
         }
     }
 

@@ -3,48 +3,44 @@ using UnityEngine;
 
 public class FireSkill : SkillChip
 {
-    private List<GameObject> chipsInRadius;
+    //этот скилл уничтожает все фишки в радиусе своего действия
+    //фишки, которые уничтожатся во время взрыва, записываются в список
+    private List<GameObject> _chipsInRadius;
 
     private void Start()
     {
-        chipsInRadius = new List<GameObject>();
+        _chipsInRadius = new List<GameObject>();
     }
 
     public override void UseSkillOnTriggerEnter(Collider col)
     {
-        if (col.gameObject.layer == 3 && !chipsInRadius.Contains(col.gameObject))
+        if (col.gameObject.layer == 3 && !_chipsInRadius.Contains(col.gameObject))
         {
-            chipsInRadius.Add(col.gameObject);
+            _chipsInRadius.Add(col.gameObject);
         }
-
         base.UseSkillOnTriggerEnter(col);
     }
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.gameObject.layer == 3 && chipsInRadius.Contains(other.gameObject))
-        {
-            Debug.Log("��� �������");
-            chipsInRadius.Remove(other.gameObject);
-        }
+        if (other.gameObject.layer == 3 && _chipsInRadius.Contains(other.gameObject))        
+            _chipsInRadius.Remove(other.gameObject);        
     }
 
     public override void UseSkillOnCollisionEnter(Collision col)
     {
-        if (col.gameObject.layer == 3 || col.gameObject.layer == 6)
+        if (col.gameObject.layer == 3 || col.gameObject.layer == 6) //взрыв при столкновении с фишкой или стеной
         {
-            //Debug.Log("��� �������");
-            foreach (GameObject go in chipsInRadius)
+            foreach (GameObject go in _chipsInRadius)
             {
                 Chip goCc = go.GetComponent<Chip>();
-                ScoreController.S.RaiseScore(goCc.�hipValue, go.transform.position, goCc.�hipColor);
+                ScoreController.S.RaiseScore(goCc.СhipValue, go.transform.position, goCc.СhipColor);
                 goCc.DestroyGO();
             }
             EffectsController.S.ShowExplosionEffect(transform.position);
             AudioManager.S.PlayExplosive();
             Destroy(gameObject);
         }
-
         base.UseSkillOnCollisionEnter(col);
     }
 }

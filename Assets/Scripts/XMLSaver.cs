@@ -111,11 +111,11 @@ public class XMLSaver : MonoBehaviour
             SkillChip sc = currentChip.GetComponent<SkillChip>();
             XmlAttribute colorCurAtt = _saveX.CreateAttribute("color");
             XmlText colorCurText;
-            if (sc.color == eChipColors.green)
+            if (sc.Color == eChipColors.green)
                 colorCurText = _saveX.CreateTextNode("green");
-            else if (sc.color == eChipColors.red)
+            else if (sc.Color == eChipColors.red)
                 colorCurText = _saveX.CreateTextNode("red");
-            else if (sc.color == eChipColors.blue)
+            else if (sc.Color == eChipColors.blue)
                 colorCurText = _saveX.CreateTextNode("blue");
             else
                 colorCurText = _saveX.CreateTextNode("purple");

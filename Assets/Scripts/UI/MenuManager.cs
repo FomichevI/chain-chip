@@ -6,39 +6,43 @@ public class MenuManager : MonoBehaviour
 {
     public static MenuManager S;
 
-    [SerializeField] private GameObject nextStagePanel;
-    [SerializeField] private GameObject newSkillPanel;
-    [SerializeField] private GameObject losePanel;
-    [SerializeField] private GameObject settingsPanel;
-    [SerializeField] private GameObject wantToRestartPanel;
-    [SerializeField] private GameObject menuPanel;
-    [SerializeField] private GameObject rulesPanel;
-    [SerializeField] private GameObject logo;
+    [HideInInspector] public eChipColors LastSkillColor;
+    [SerializeField] private GameObject _nextStagePanel;
+    [SerializeField] private GameObject _newSkillPanel;
+    [SerializeField] private GameObject _losePanel;
+    [SerializeField] private GameObject _settingsPanel;
+    [SerializeField] private GameObject _wantToRestartPanel;
+    [SerializeField] private GameObject _menuPanel;
+    [SerializeField] private GameObject _rulesPanel;
+    [SerializeField] private GameObject _logo;
+    [SerializeField] private GameObject _noAdsBut;
 
     [Header("NewStagePanel Settings")]
-    [SerializeField] private GameObject[] praiseTexts;
+    //при активации похвалы игрока рандомно выбирается один из текстов
+    [SerializeField] private GameObject[] _praiseTexts;
 
     [Header("NewSkillPanel Settings")]
-    [SerializeField] private GameObject noThanksSkillPanelBut;
-    [SerializeField] private GameObject[] fireSkillImgs;
-    [SerializeField] private GameObject[] frostSkillImgs;
-    [SerializeField] private GameObject[] lightningSkillImgs;
-    [SerializeField] private GameObject[] cristalSkillImgs;
-    [SerializeField] private GameObject noAdsBut;
-    private bool isActiveStageOrSkillPanel;
+    //на панели получения нового скилла активируются необходимые значки, в зависимости от того, какой скилл получен
+    //кнопка "No, thanks" появляется не сразу, а спустя несколько секунд    
+    [SerializeField] private GameObject _noThanksBut;
+    [SerializeField] private GameObject[] _fireSkillImgs;
+    [SerializeField] private GameObject[] _frostSkillImgs;
+    [SerializeField] private GameObject[] _lightningSkillImgs;
+    [SerializeField] private GameObject[] _cristalSkillImgs;
+    [HideInInspector] public bool IsLoadingNoThank = false; //переменная для проверки, находится ли кнопка "No, thanks" в стадии загрузки
+    private bool _isActiveStageOrSkillPanel;
 
     [Header("SettingsPanel Settings")]
-    [SerializeField] private GameObject musicCheckBoxImg;
-    [SerializeField] private GameObject soundsCheckBoxImg;
+    //если музыка включена или отключена, активируем соответствующий чекбокс
+    [SerializeField] private GameObject _musicCheckBoxImg;
+    [SerializeField] private GameObject _soundsCheckBoxImg;
 
     [Header("LosePanel Settings")]
-    [SerializeField] private GameObject newBestScoreObj;
-    [SerializeField] private GameObject[] lastScoreObjs;
-    [SerializeField] private TextMeshProUGUI currentScoreText;
-    [SerializeField] private TextMeshProUGUI lastScoreText;
-
-    public bool isWorkShowNoThanksCor = false;
-    public eChipColors lastSkillColor;
+    //на панели проигрыша показываем текущий и лучший результаты игрока
+    [SerializeField] private GameObject _newBestScoreObj;
+    [SerializeField] private GameObject[] _lastScoreObjs;
+    [SerializeField] private TextMeshProUGUI _currentScoreText;
+    [SerializeField] private TextMeshProUGUI _lastScoreText;
 
 
     private void Awake()
@@ -50,65 +54,65 @@ public class MenuManager : MonoBehaviour
     private void Start()
     {
         if (!XmlReader.S.NoAddsMode())
-            noAdsBut.SetActive(true);
+            _noAdsBut.SetActive(true);
         else
-            noAdsBut.SetActive(false);
+            _noAdsBut.SetActive(false);
     }
 
     public void ShowNextStagePanel()
     {
-        if (!isActiveStageOrSkillPanel)
+        if (!_isActiveStageOrSkillPanel)
         {
-            isActiveStageOrSkillPanel = true;
-            nextStagePanel.SetActive(true);
-            //�������� ��������� ����� � ��������
-            foreach (GameObject go in praiseTexts)
+            _isActiveStageOrSkillPanel = true;
+            _nextStagePanel.SetActive(true);
+            //включить случайный текст с похвалой
+            foreach (GameObject go in _praiseTexts)
                 go.SetActive(false);
-            praiseTexts[Random.Range(0, praiseTexts.Length)].SetActive(true);
+            _praiseTexts[Random.Range(0, _praiseTexts.Length)].SetActive(true);
         }
     }
     public void HideNextStagePanel()
     {
-        isActiveStageOrSkillPanel = false;
-        nextStagePanel.SetActive(false);
+        _isActiveStageOrSkillPanel = false;
+        _nextStagePanel.SetActive(false);
 
         if (!XmlReader.S.NoAddsMode())
         {
-            UnityAdsManager.S.ShowInterstitial();
+            //UnityAdsManager.S.ShowInterstitial();
             //AdsManager.S.ShowInterstitialAd();
         }
     }
     public void ShowNewSkillPanel()
     {
-        if (!isActiveStageOrSkillPanel && lastSkillColor != eChipColors.no)
+        if (!_isActiveStageOrSkillPanel && LastSkillColor != eChipColors.no)
         {
-            isActiveStageOrSkillPanel = true;
-            newSkillPanel.SetActive(true);
+            _isActiveStageOrSkillPanel = true;
+            _newSkillPanel.SetActive(true);
             StartCoroutine(ShowNoThanksBut());
             HideSkillsImgs();
-            switch (lastSkillColor)
+            switch (LastSkillColor)
             {
                 case eChipColors.green:
-                    foreach (GameObject go in cristalSkillImgs)
+                    foreach (GameObject go in _cristalSkillImgs)
                         go.SetActive(true);
                     break;
                 case eChipColors.blue:
-                    foreach (GameObject go in frostSkillImgs)
+                    foreach (GameObject go in _frostSkillImgs)
                         go.SetActive(true);
                     break;
                 case eChipColors.red:
-                    foreach (GameObject go in fireSkillImgs)
+                    foreach (GameObject go in _fireSkillImgs)
                         go.SetActive(true);
                     break;
                 case eChipColors.purple:
-                    foreach (GameObject go in lightningSkillImgs)
+                    foreach (GameObject go in _lightningSkillImgs)
                         go.SetActive(true);
                     break;
             }
         }
         else
         {
-            lastSkillColor = eChipColors.no;
+            LastSkillColor = eChipColors.no;
         }
     }
     public void ShowAdd()
@@ -120,59 +124,59 @@ public class MenuManager : MonoBehaviour
         }
         else
         {
-            isWorkShowNoThanksCor = false;
-            SkillsController.S.RaiseSkillFilling(SkillsController.S.maxFillingSkills, MenuManager.S.lastSkillColor);
-            lastSkillColor = eChipColors.no;
+            IsLoadingNoThank = false;
+            SkillsController.S.IncreaseSkillFilling(SkillsController.S.MaxFillingSkills, MenuManager.S.LastSkillColor);
+            LastSkillColor = eChipColors.no;
             HideAllPanels();
         }
     }
     IEnumerator ShowNoThanksBut()
     {
-        isWorkShowNoThanksCor = true;
+        IsLoadingNoThank = true;
         yield return new WaitForSeconds(2f);
-        if (isWorkShowNoThanksCor)
-            noThanksSkillPanelBut.SetActive(true);
+        if (IsLoadingNoThank)
+            _noThanksBut.SetActive(true);
     }
     public void ShowLosePanel()
     {
         HideAllPanels();
-        losePanel.SetActive(true);
+        _losePanel.SetActive(true);
         if (ScoreController.S.GetScore() > XmlReader.S.GetMaxScore())
         {
-            foreach (GameObject go in lastScoreObjs)
+            foreach (GameObject go in _lastScoreObjs)
                 go.SetActive(false);
-            newBestScoreObj.SetActive(true);
+            _newBestScoreObj.SetActive(true);
             XMLSaver.S.SetMaxScore(ScoreController.S.GetScore());
         }
         else
         {
-            foreach (GameObject go in lastScoreObjs)
+            foreach (GameObject go in _lastScoreObjs)
                 go.SetActive(true);
-            newBestScoreObj.SetActive(false);
-            lastScoreText.text = XmlReader.S.GetMaxScore().ToString();
+            _newBestScoreObj.SetActive(false);
+            _lastScoreText.text = XmlReader.S.GetMaxScore().ToString();
         }
-        currentScoreText.text = ScoreController.S.GetScore().ToString();
+        _currentScoreText.text = ScoreController.S.GetScore().ToString();
         //if (ScoreController.S.GetScore() >= 250)
-            //RManager.S.ShowRewie();
+        //RManager.S.ShowRewie();
     }
     public void ShowSettingsPanel()
     {
-        settingsPanel.SetActive(true);
-        logo.SetActive(false);
+        _settingsPanel.SetActive(true);
+        _logo.SetActive(false);
     }
     public void HideSettingsPanel()
     {
-        settingsPanel.SetActive(false);
-        if (menuPanel.activeSelf)
-            logo.SetActive(true);
+        _settingsPanel.SetActive(false);
+        if (_menuPanel.activeSelf)
+            _logo.SetActive(true);
     }
     public void ShowWantToRestartPanel()
     {
-        wantToRestartPanel.SetActive(true);
+        _wantToRestartPanel.SetActive(true);
     }
     public void HideWantToRestartPanel()
     {
-        wantToRestartPanel.SetActive(false);
+        _wantToRestartPanel.SetActive(false);
     }
     public void RestartLevel()
     {
@@ -183,38 +187,38 @@ public class MenuManager : MonoBehaviour
     public void ShowMenuPanel()
     {
         HideAllPanels();
-        menuPanel.SetActive(true);
-        logo.SetActive(true);
+        _menuPanel.SetActive(true);
+        _logo.SetActive(true);
     }
     public void ShowRulesPanel()
     {
-        rulesPanel.SetActive(true);
-        rulesPanel.GetComponent<ManualController>().SetStartPage();
+        _rulesPanel.SetActive(true);
+        _rulesPanel.GetComponent<ManualController>().SetStartPage();
     }
     public void HideAllPanels()
     {
-        nextStagePanel.SetActive(false);
-        newSkillPanel.SetActive(false);
-        losePanel.SetActive(false);
-        settingsPanel.SetActive(false);
-        wantToRestartPanel.SetActive(false);
-        menuPanel.SetActive(false);
-        noThanksSkillPanelBut.SetActive(false);
-        isWorkShowNoThanksCor = false;
-        isActiveStageOrSkillPanel = false;
-        lastSkillColor = eChipColors.no;
-        logo.SetActive(false);
+        _nextStagePanel.SetActive(false);
+        _newSkillPanel.SetActive(false);
+        _losePanel.SetActive(false);
+        _settingsPanel.SetActive(false);
+        _wantToRestartPanel.SetActive(false);
+        _menuPanel.SetActive(false);
+        _noThanksBut.SetActive(false);
+        IsLoadingNoThank = false;
+        _isActiveStageOrSkillPanel = false;
+        LastSkillColor = eChipColors.no;
+        _logo.SetActive(false);
     }
 
     private void HideSkillsImgs()
     {
-        foreach (GameObject go in fireSkillImgs)
+        foreach (GameObject go in _fireSkillImgs)
             go.SetActive(false);
-        foreach (GameObject go in frostSkillImgs)
+        foreach (GameObject go in _frostSkillImgs)
             go.SetActive(false);
-        foreach (GameObject go in lightningSkillImgs)
+        foreach (GameObject go in _lightningSkillImgs)
             go.SetActive(false);
-        foreach (GameObject go in cristalSkillImgs)
+        foreach (GameObject go in _cristalSkillImgs)
             go.SetActive(false);
     }
     public void ShowRecords()
@@ -226,7 +230,7 @@ public class MenuManager : MonoBehaviour
         if (!XmlReader.S.NoAddsMode())
         {
             XMLSaver.S.SwitchOffAds();
-        }        
+        }
     }
 
     public void SwitchMusic()
@@ -258,22 +262,22 @@ public class MenuManager : MonoBehaviour
     {
         if (XmlReader.S.GetMusicOn())
         {
-            musicCheckBoxImg.SetActive(true);
+            _musicCheckBoxImg.SetActive(true);
             AudioManager.S.SetMusicVolume(1);
         }
         else
         {
-            musicCheckBoxImg.SetActive(false);
+            _musicCheckBoxImg.SetActive(false);
             AudioManager.S.SetMusicVolume(0);
         }
         if (XmlReader.S.GetSoundsOn())
         {
-            soundsCheckBoxImg.SetActive(true);
+            _soundsCheckBoxImg.SetActive(true);
             AudioManager.S.SetSoundsVolume(1);
         }
         else
         {
-            soundsCheckBoxImg.SetActive(false);
+            _soundsCheckBoxImg.SetActive(false);
             AudioManager.S.SetSoundsVolume(0);
         }
     }

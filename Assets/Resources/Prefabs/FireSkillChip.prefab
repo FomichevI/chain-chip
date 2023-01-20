@@ -17,7 +17,7 @@ GameObject:
   - component: {fileID: 3259470627676529051}
   - component: {fileID: 2764449311368786371}
   - component: {fileID: 6454099077186320749}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: FireSkillChip
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -34,6 +34,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0.6, z: 0}
   m_LocalScale: {x: 0.8, y: 1, z: 0.8}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 814225173912110485}
   m_Father: {fileID: 0}
@@ -58,6 +59,7 @@ MeshRenderer:
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
@@ -156,11 +158,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fcf17ab417a386542bb2b37abdcbc4c6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  onTable: 0
-  chipsLayer:
+  OnTable: 0
+  ChipsLayer:
     serializedVersion: 2
     m_Bits: 8
-  color: 1
+  Color: 1
 --- !u!82 &6454099077186320749
 AudioSource:
   m_ObjectHideFlags: 0
@@ -264,9 +266,25 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 2764449311368786382}
     m_Modifications:
+    - target: {fileID: 3202647934651047022, guid: f9045c126ef538348b86a6e4910bb1a3, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 3203202611930203986, guid: f9045c126ef538348b86a6e4910bb1a3, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 3203564209529832102, guid: f9045c126ef538348b86a6e4910bb1a3, type: 3}
       propertyPath: m_Name
       value: Fire
+      objectReference: {fileID: 0}
+    - target: {fileID: 3203564209529832102, guid: f9045c126ef538348b86a6e4910bb1a3, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 3204061459152160698, guid: f9045c126ef538348b86a6e4910bb1a3, type: 3}
+      propertyPath: m_Layer
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 3206040215340650326, guid: f9045c126ef538348b86a6e4910bb1a3, type: 3}
       propertyPath: m_RootOrder

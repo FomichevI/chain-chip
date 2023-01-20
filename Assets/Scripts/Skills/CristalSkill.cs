@@ -2,43 +2,45 @@ using UnityEngine;
 
 public class CristalSkill : SkillChip
 {
-    private int maxTargets = 5;
-    private int currentTargets = 0;
-    private SphereCollider sphereTrigger;
-    private bool isCenterChanged = false;
-    private Vector3 permanentVelocity;
+    private int _maxTargets = 5;
+    private int _currentTargets = 0;
+    private SphereCollider _sphereTrigger;
+    private bool _isCenterChanged = false;
+    private Vector3 _permanentVelocity;
 
     private void Start()
     {
         SphereCollider[] spheres = GetComponents<SphereCollider>();
         foreach (SphereCollider sc in spheres)
             if (sc.isTrigger == true)
-                sphereTrigger = sc;
+                _sphereTrigger = sc;
     }
 
     private void Update()
     {
-        if (!isCenterChanged && onTable == true && rb.velocity != Vector3.zero)
+        //фишка этого скилла движется с постоянной скоростью прямолинейно
+        if (!_isCenterChanged && OnTable == true && rb.velocity != Vector3.zero) //когда мы только что запустили фишку
         {
             Vector3 direction = rb.velocity.normalized;
-            permanentVelocity = rb.velocity * 1;
-            sphereTrigger.center = new Vector3(direction.x * 0.5f, sphereTrigger.center.y, direction.z * 0.5f);
-            isCenterChanged = true;
+            _permanentVelocity = rb.velocity * 1;
+            //передвигаем триггер немного вперед по направлению движения фишки, чтобы фишка не тормозила от столкновений
+            _sphereTrigger.center = new Vector3(direction.x * 0.5f, _sphereTrigger.center.y, direction.z * 0.5f); 
+            _isCenterChanged = true;
         }
-        if (isCenterChanged)
-            rb.velocity = permanentVelocity;
+        if (_isCenterChanged)
+            rb.velocity = _permanentVelocity;
     }
 
     public override void UseSkillOnTriggerEnter(Collider col)
     {
-        if (col.gameObject.layer == 3)
+        if (col.gameObject.layer == 3) //если происходит столкновение с фишкой
         {
-            if (currentTargets < maxTargets)
+            if (_currentTargets < _maxTargets)
             {
-                ScoreController.S.RaiseScore(col.gameObject.GetComponent<Chip>().�hipValue, col.transform.position, col.gameObject.GetComponent<Chip>().�hipColor);
+                ScoreController.S.RaiseScore(col.gameObject.GetComponent<Chip>().СhipValue, col.transform.position, col.gameObject.GetComponent<Chip>().СhipColor);
                 col.gameObject.GetComponent<Chip>().DestroyGO();
                 AudioManager.S.PlayUnification();
-                currentTargets++;
+                _currentTargets++;
             }
             else
             {
@@ -51,7 +53,7 @@ public class CristalSkill : SkillChip
 
     public override void UseSkillOnCollisionEnter(Collision col)
     {
-        if (col.gameObject.layer == 6)
+        if (col.gameObject.layer == 6) //если происходит столкновение со стенкой
         {
             EffectsController.S.ShowCristalHitEffect(transform.position);
             AudioManager.S.PlayCristalBreak();

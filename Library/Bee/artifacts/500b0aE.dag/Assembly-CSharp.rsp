@@ -373,8 +373,6 @@
 "Assets/Scripts/UI/ManualController.cs"
 "Assets/Scripts/UI/MenuManager.cs"
 "Assets/Scripts/UI/ScoreController.cs"
-"Assets/Scripts/UI/ThemeChanger.cs"
-"Assets/Scripts/UI/UnityAdsManager.cs"
 "Assets/Scripts/XmlReader.cs"
 "Assets/Scripts/XMLSaver.cs"
 -langversion:9.0

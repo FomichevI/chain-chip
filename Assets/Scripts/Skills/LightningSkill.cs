@@ -5,48 +5,45 @@ using DigitalRuby.LightningBolt;
 
 public class LightningSkill : SkillChip
 {
-    private List<Chip> targets;
-    [SerializeField] private int targetsCount = 4;
-    [SerializeField] private LightningBoltScript lightningScript;
-    private MeshRenderer meshRenderer;
-    private bool isUsed = false;
-    private int collTimes = 0;
-
-    [SerializeField] private GameObject lightningEffect;
+    [SerializeField] private int _targetsCount = 5;
+    [SerializeField] private LightningBoltScript _lightningScript;
+    [SerializeField] private GameObject _lightningEffect;
+    private List<Chip> _targets;
+    private MeshRenderer _meshRenderer;
+    private bool _isUsed = false;
+    private int _collTimes = 0;
 
     private void Start()
     {
-        targets = new List<Chip>();
-        meshRenderer = GetComponent<MeshRenderer>();
+        _targets = new List<Chip>();
+        _meshRenderer = GetComponent<MeshRenderer>();
     }
 
     public override void UseSkillOnCollisionEnter(Collision col)
     {
-        if (!isUsed)
+        if (!_isUsed)
         {
-            if (col.gameObject.layer == 3)
+            if (col.gameObject.layer == 3) //–ø—Ä–∏ —Å—Ç–æ–ª–∫–Ω–æ–≤–µ–Ω–∏–∏ —Å —Ñ–∏—à–∫–æ–π –∑–∞–ø—É—Å–∫–∞–µ–º —Ü–µ–ø–Ω—É—é –º–æ–ª–Ω–∏—é
             {
-                isUsed = true;
-
+                _isUsed = true;
                 Vector3 currentChipPos = transform.position;
                 int currentTargetCount = 1;
 
-                while (currentChipPos != Vector3.zero && currentTargetCount < targetsCount)
+                while (currentChipPos != Vector3.zero && currentTargetCount < _targetsCount)
                 {
                     currentChipPos = FindNextChip(currentChipPos);
                     currentTargetCount++;
                 }
-                //Debug.Log(targets.Count);
                 DestroyTargets();
             }
-            else if (col.gameObject.layer == 6)
+            else if (col.gameObject.layer == 6) //–ø—Ä–∏ —Å—Ç–æ–ª–∫–Ω–æ–≤–µ–Ω–∏–∏ —Å–æ —Å—Ç–µ–Ω–æ–π —É–Ω–∏—á—Ç–æ–∂–∞–µ–º
             {
                 Destroy(gameObject);
             }
         }
     }
 
-    private Vector3 FindNextChip(Vector3 currentChipPos) //Ì‡ıÓ‰ËÏ ·ÎËÊ‡È¯Û˛ ÙË¯ÍÛ ‚ ÔÂ‰ÂÎ‡ı ‡‰ËÛÒ‡
+    private Vector3 FindNextChip(Vector3 currentChipPos) //–Ω–∞—Ö–æ–¥–∏–º –±–ª–∏–∂–∞–π—à—É—é —Ñ–∏—à–∫—É –≤ –ø—Ä–µ–¥–µ–ª–∞—Ö —Ä–∞–¥–∏—É—Å–∞
     {
         float maxDistance = 3;
         int nearestChip = -1;
@@ -55,7 +52,7 @@ public class LightningSkill : SkillChip
         {
             if ((currentChipPos - GameManager.S.ChipsOnTable[i].transform.position).magnitude < maxDistance)
             {
-                if (!targets.Contains(GameManager.S.ChipsOnTable[i].GetComponent<Chip>()))
+                if (!_targets.Contains(GameManager.S.ChipsOnTable[i].GetComponent<Chip>()))
                 {
                     maxDistance = (currentChipPos - GameManager.S.ChipsOnTable[i].transform.position).magnitude;
                     nearestChip = i;
@@ -69,17 +66,17 @@ public class LightningSkill : SkillChip
         }
         else
         {
-            targets.Add(GameManager.S.ChipsOnTable[nearestChip].GetComponent<Chip>());
+            _targets.Add(GameManager.S.ChipsOnTable[nearestChip].GetComponent<Chip>());
             return GameManager.S.ChipsOnTable[nearestChip].transform.position;
         }
     }
 
 
-    private void DestroyTargets() //ÛÌË˜ÚÓÊ‡ÂÏ ‚Ò˛ ˆÂÔÓ˜ÍÛ Ì‡È‰ÂÌ˚ı ÙË¯ÂÍ
+    private void DestroyTargets() //—É–Ω–∏—á—Ç–æ–∂–∞–µ–º –≤—Å—é —Ü–µ–ø–æ—á–∫—É –Ω–∞–π–¥–µ–Ω—ã—Ö —Ñ–∏—à–µ–∫
     {
-        lightningScript.StartPosition = new Vector3(transform.position.x, transform.position.y + 0.25f, transform.position.z);
-        if (targets.Count > 0)
-            lightningScript.EndPosition = new Vector3(targets[0].gameObject.transform.position.x, targets[0].gameObject.transform.position.y + 0.25f, targets[0].gameObject.transform.position.z);
+        _lightningScript.StartPosition = new Vector3(transform.position.x, transform.position.y + 0.25f, transform.position.z);
+        if (_targets.Count > 0)
+            _lightningScript.EndPosition = new Vector3(_targets[0].gameObject.transform.position.x, _targets[0].gameObject.transform.position.y + 0.25f, _targets[0].gameObject.transform.position.z);
         StartCoroutine(DestroyAllTargest());
         AudioManager.S.PlayLightningHit();
     }
@@ -89,48 +86,48 @@ public class LightningSkill : SkillChip
         while (true)
         {
             yield return new WaitForSeconds(0.1f);
-            collTimes += 1;
-            if (collTimes > 6)
-                Destroy(gameObject); // Ì‡ ÒÎÛ˜‡È ÌÂÔÂ‰‚Ë‰ÂÌÌÓ„Ó ·‡„‡
+            _collTimes += 1;
+            if (_collTimes > 6)
+                Destroy(gameObject); // –Ω–∞ —Å–ª—É—á–∞–π –Ω–µ–ø—Ä–µ–¥–≤–∏–¥–µ–Ω–Ω–æ–≥–æ –±–∞–≥–∞
 
-            if (targets.Count > 0)
+            if (_targets.Count > 0)
             {
-                if (meshRenderer.enabled == true)
+                if (_meshRenderer.enabled == true)
                 {
-                    meshRenderer.enabled = false;
-                    lightningEffect.SetActive(false);
+                    _meshRenderer.enabled = false;
+                    _lightningEffect.SetActive(false);
 
-                    if (targets[0] != null)                    
-                        lightningScript.StartPosition = targets[0].gameObject.transform.position;                    
+                    if (_targets[0] != null)                    
+                        _lightningScript.StartPosition = _targets[0].gameObject.transform.position;                    
                     else                    
                         Destroy(gameObject);
                     
-                    if (targets.Count > 1)
+                    if (_targets.Count > 1)
                     {
-                        if (targets[1] == null)
+                        if (_targets[1] == null)
                             Destroy(gameObject);
-                        lightningScript.EndPosition = targets[1].gameObject.transform.position;
+                        _lightningScript.EndPosition = _targets[1].gameObject.transform.position;
                     }                     
                 }
                 else
                 {
-                    if (targets[0] != null) //Ó‰Ì‡ ËÁ ˆÂÎÂÈ ÏÓÊÂÚ Û‰‡ÎËÚ¸Òˇ ‡Ì¸¯Â, ˜ÂÏ ‰Ó ÌÂÂ ‰ÓÈ‰ÂÚ ˆÂÔÌ‡ˇ ÏÓÎÌËˇ, ‚ ˝ÚÓÏ ÒÎÛ˜‡Â ÌÛÊÌ‡ ÔÓ‚ÂÍ‡
+                    if (_targets[0] != null) //–æ–¥–Ω–∞ –∏–∑ —Ü–µ–ª–µ–π –º–æ–∂–µ—Ç —É–¥–∞–ª–∏—Ç—å—Å—è —Ä–∞–Ω—å—à–µ, —á–µ–º –¥–æ –Ω–µ–µ –¥–æ–π–¥–µ—Ç —Ü–µ–ø–Ω–∞—è –º–æ–ª–Ω–∏—è, –≤ —ç—Ç–æ–º —Å–ª—É—á–∞–µ –Ω—É–∂–Ω–∞ –ø—Ä–æ–≤–µ—Ä–∫–∞
                     {
-                        ScoreController.S.RaiseScore(targets[0].—hipValue, targets[0].transform.position, targets[0].—hipColor);
-                        targets[0].DestroyGO();
+                        ScoreController.S.RaiseScore(_targets[0].–°hipValue, _targets[0].transform.position, _targets[0].–°hipColor);
+                        _targets[0].DestroyGO();
                     }
                     else
                     {
                         Destroy(gameObject);
                     }
-                    targets.Remove(targets[0]);
+                    _targets.Remove(_targets[0]);
 
-                    if (targets.Count != 0)
+                    if (_targets.Count != 0)
                     {
-                        lightningScript.StartPosition = new Vector3(targets[0].gameObject.transform.position.x, targets[0].gameObject.transform.position.y + 0.25f, targets[0].gameObject.transform.position.z);
-                        if (targets.Count > 1)
+                        _lightningScript.StartPosition = new Vector3(_targets[0].gameObject.transform.position.x, _targets[0].gameObject.transform.position.y + 0.25f, _targets[0].gameObject.transform.position.z);
+                        if (_targets.Count > 1)
                         {
-                            lightningScript.EndPosition = new Vector3(targets[1].gameObject.transform.position.x, targets[1].gameObject.transform.position.y + 0.25f, targets[1].gameObject.transform.position.z);
+                            _lightningScript.EndPosition = new Vector3(_targets[1].gameObject.transform.position.x, _targets[1].gameObject.transform.position.y + 0.25f, _targets[1].gameObject.transform.position.z);
                         }
                     }
                 }
@@ -146,5 +143,4 @@ public class LightningSkill : SkillChip
     {
         StopCoroutine(DestroyAllTargest());
     }
-
 }
