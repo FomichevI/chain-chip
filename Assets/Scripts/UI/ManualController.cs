@@ -3,31 +3,30 @@ using UnityEngine;
 
 public class ManualController : MonoBehaviour
 {
-    [SerializeField] private List<GameObject> pages;
-    [SerializeField] private GameObject backBut;
-    private int currentPage = 0;
-
-    private Vector2 swipeStartPos;
-    private float swipeStartTime;
-
+    [SerializeField] private List<GameObject> _pages;
+    [SerializeField] private GameObject _backBut;
+    private int _currentPageIndex = 0;
+    //параметры для свайпа
+    private Vector2 _swipeStartPos;
+    private float _swipeStartTime;
 
     private void Update()
     {
         if (Input.GetMouseButtonDown(0))
         {
-            swipeStartPos = Input.mousePosition;
-            swipeStartTime = Time.time;
+            _swipeStartPos = Input.mousePosition;
+            _swipeStartTime = Time.time;
         }
         if (Input.GetMouseButtonUp(0))
         {
             Vector2 swipePos = Input.mousePosition;
-            if (Mathf.Abs(swipePos.y - swipeStartPos.y)<100 && Time.time - swipeStartTime < 0.5f)
+            if (Mathf.Abs(swipePos.y - _swipeStartPos.y) < 100 && Time.time - _swipeStartTime < 0.5f)
             {
-                if ((swipePos.x - swipeStartPos.x) < -100)
+                if ((swipePos.x - _swipeStartPos.x) < -100)
                 {
                     SetNextPage();
                 }
-                else if ((swipePos.x - swipeStartPos.x) > 100)
+                else if ((swipePos.x - _swipeStartPos.x) > 100)
                 {
                     SetBackPage();
                 }
@@ -37,37 +36,37 @@ public class ManualController : MonoBehaviour
 
     public void SetNextPage()
     {
-        pages[currentPage].SetActive(false);
-        currentPage++;
-        if (currentPage == pages.Count)
+        _pages[_currentPageIndex].SetActive(false);
+        _currentPageIndex++;
+        if (_currentPageIndex == _pages.Count)
         {
             gameObject.SetActive(false);
         }
         else
         {
-            pages[currentPage].SetActive(true);
+            _pages[_currentPageIndex].SetActive(true);
         }
-        backBut.SetActive(true);
+        _backBut.SetActive(true);
     }
     public void SetBackPage()
     {
-        if (currentPage > 0)
+        if (_currentPageIndex > 0)
         {
-            pages[currentPage].SetActive(false);
-            currentPage--;
-            if (currentPage == 0)
+            _pages[_currentPageIndex].SetActive(false);
+            _currentPageIndex--;
+            if (_currentPageIndex == 0)
             {
-                backBut.SetActive(false);
+                _backBut.SetActive(false);
             }
-            pages[currentPage].SetActive(true);
+            _pages[_currentPageIndex].SetActive(true);
         }
     }
     public void SetStartPage()
     {
-        foreach (GameObject go in pages)
+        foreach (GameObject go in _pages)
             go.SetActive(false);
-        currentPage = 0;
-        pages[currentPage].SetActive(true);
-        backBut.SetActive(false);
+        _currentPageIndex = 0;
+        _pages[_currentPageIndex].SetActive(true);
+        _backBut.SetActive(false);
     }
 }

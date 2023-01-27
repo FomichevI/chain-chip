@@ -209,20 +209,4 @@ public class SkillsController : MonoBehaviour
         else
             return _currentLightningSkillCount;
     }
-    public void UnactiveFireEffect()
-    {
-        _fireSkillEffect.SetActive(false);
-    }
-    public void UnactiveFrostEffect()
-    {
-        _frostSkillEffect.SetActive(false);
-    }
-    public void UnactiveCristalEffect()
-    {
-        _cristalSkillEffect.SetActive(false);
-    }
-    public void UnactiveLightningEffect()
-    {
-        _lightningSkillEffect.SetActive(false);
-    }
 }

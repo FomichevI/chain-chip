@@ -136,7 +136,7 @@ public class Chip : MonoBehaviour
     }
 
     public void DestroyGO()
-    {
+    {        
         EffectsController.S.ShowHitEffect(transform.position, СhipColor);
         Destroy(gameObject);
     }

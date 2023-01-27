@@ -269,7 +269,7 @@ GameObject:
   - component: {fileID: 2665246}
   - component: {fileID: 2665245}
   m_Layer: 5
-  m_Name: Text (TMP)
+  m_Name: WantToRestartText (TMP)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2721,7 +2721,7 @@ GameObject:
   - component: {fileID: 324535495}
   - component: {fileID: 324535494}
   m_Layer: 5
-  m_Name: Text (TMP) (1)
+  m_Name: Page1Text (TMP)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3438,7 +3438,7 @@ GameObject:
   - component: {fileID: 347980784}
   - component: {fileID: 347980783}
   m_Layer: 5
-  m_Name: Text (TMP) (3)
+  m_Name: RaitingText (TMP)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5090,7 +5090,7 @@ GameObject:
   - component: {fileID: 492377160}
   - component: {fileID: 492377159}
   m_Layer: 5
-  m_Name: Text (TMP) (3)
+  m_Name: NoThanksText (TMP)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5225,7 +5225,7 @@ GameObject:
   - component: {fileID: 501390071}
   - component: {fileID: 501390070}
   m_Layer: 5
-  m_Name: Text (TMP) (1)
+  m_Name: Page5Text (TMP)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -7919,7 +7919,7 @@ GameObject:
   - component: {fileID: 896843009}
   - component: {fileID: 896843008}
   m_Layer: 5
-  m_Name: Text (TMP) (1)
+  m_Name: Page4Text (TMP)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -8268,7 +8268,7 @@ GameObject:
   - component: {fileID: 924451018}
   - component: {fileID: 924451017}
   m_Layer: 5
-  m_Name: Text (TMP) (3)
+  m_Name: RestartText (TMP)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -8785,7 +8785,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3370bc7ada84be14e88453cab815ab8d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  lastShowInterstitial: -300
 --- !u!114 &963194233
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8798,9 +8797,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 16d889d93437fdd43a36789c63b1c871, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cam: {fileID: 0}
-  colors: []
-  currentBg: 0
 --- !u!114 &963194234
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10072,7 +10068,7 @@ GameObject:
   - component: {fileID: 1112557260}
   - component: {fileID: 1112557259}
   m_Layer: 5
-  m_Name: Text (TMP)
+  m_Name: NoText (TMP)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -10360,7 +10356,7 @@ GameObject:
   - component: {fileID: 1154187600}
   - component: {fileID: 1154187599}
   m_Layer: 5
-  m_Name: Text (TMP) (3)
+  m_Name: TryAgainText (TMP)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -10572,7 +10568,7 @@ GameObject:
   - component: {fileID: 1183347331}
   - component: {fileID: 1183347330}
   m_Layer: 5
-  m_Name: NameText (TMP)
+  m_Name: GameNameText (TMP)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -10792,14 +10788,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 42e7347004f5c9f48a2acc7a706cf278, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pages:
+  _pages:
   - {fileID: 577085634}
   - {fileID: 380153857}
   - {fileID: 1515391203}
   - {fileID: 1403887822}
   - {fileID: 1554642266}
   - {fileID: 449221930}
-  backBut: {fileID: 1075967801}
+  _backBut: {fileID: 1075967801}
 --- !u!1 &1195561665
 GameObject:
   m_ObjectHideFlags: 0
@@ -11104,7 +11100,7 @@ GameObject:
   - component: {fileID: 1254288414}
   - component: {fileID: 1254288413}
   m_Layer: 5
-  m_Name: Text (TMP) (3)
+  m_Name: MenuText (TMP)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -11759,15 +11755,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6d3ad936c2b347345b62f98b83feef74, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  effectAs: {fileID: 453463651}
-  unificationAs: {fileID: 1656044666}
-  musicAs: {fileID: 696394501}
-  UiEffectsAs: {fileID: 1634233526}
-  explosiveAc: {fileID: 8300000, guid: 023d1d1299eea5d48a6e7a666c2ad2de, type: 3}
-  lightningHitAc: {fileID: 8300000, guid: 606712638db9cbe4ca9470f20f99160e, type: 3}
-  flyAc: {fileID: 8300000, guid: 47357978012574644a05326d4668e2d1, type: 3}
-  fillingAc: {fileID: 8300000, guid: 493f1cb7ffad03941ba5caff0621f86f, type: 3}
-  cristalBreakAc: {fileID: 8300000, guid: 592e3a8af9dda6a40b7edfa033da89b6, type: 3}
+  _effectAs: {fileID: 453463651}
+  _unificationAs: {fileID: 1656044666}
+  _musicAs: {fileID: 696394501}
+  _uiEffectsAs: {fileID: 1634233526}
+  _explosiveAc: {fileID: 8300000, guid: 023d1d1299eea5d48a6e7a666c2ad2de, type: 3}
+  _lightningHitAc: {fileID: 8300000, guid: 606712638db9cbe4ca9470f20f99160e, type: 3}
+  _flyAc: {fileID: 8300000, guid: 47357978012574644a05326d4668e2d1, type: 3}
+  _fillingAc: {fileID: 8300000, guid: 493f1cb7ffad03941ba5caff0621f86f, type: 3}
+  _cristalBreakAc: {fileID: 8300000, guid: 592e3a8af9dda6a40b7edfa033da89b6, type: 3}
 --- !u!1 &1335936677
 GameObject:
   m_ObjectHideFlags: 0
@@ -12165,7 +12161,7 @@ GameObject:
   - component: {fileID: 1359971570}
   - component: {fileID: 1359971569}
   m_Layer: 5
-  m_Name: RestartButton (1)
+  m_Name: RestartButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -12549,9 +12545,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 655f8100828e14747804b82312bb1441, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  scoreText: {fileID: 540049365}
-  scoreBitwinStages: 25
-  plusScorePrefab: {fileID: 8417108591718275444, guid: 484c5ce748f6ca44788ffd385c82a6dc, type: 3}
+  _scoreText: {fileID: 540049365}
+  _plusScorePrefab: {fileID: 8417108591718275444, guid: 484c5ce748f6ca44788ffd385c82a6dc, type: 3}
 --- !u!114 &1391334974
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12642,32 +12637,32 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e1e4eda1ccd3c3149bd91c3518196a69, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  nextStageText: {fileID: 1538105574}
-  yourRewardText: {fileID: 1491323714}
-  noThanksText: {fileID: 492377159}
-  congratulationText: {fileID: 1459104234}
-  yourScoreText: {fileID: 1359705811}
-  yourBestScoreText: {fileID: 753769720}
-  newBestScoreText: {fileID: 234410473}
-  ratingText: {fileID: 347980783}
-  tryAgainText: {fileID: 1154187599}
-  menuText: {fileID: 1254288413}
-  restartText: {fileID: 924451017}
-  musicText: {fileID: 2051767167}
-  soundsText: {fileID: 206410133}
-  wantToRestartText: {fileID: 2665245}
-  yesText: {fileID: 1546937242}
-  noText: {fileID: 1112557259}
-  rulesPage1Text: {fileID: 324535494}
-  rulesPage2Text: {fileID: 1696869698}
-  rulesPage3Text: {fileID: 1569490113}
-  rulesPage4Text: {fileID: 896843008}
-  rulesPage5Text: {fileID: 501390070}
-  rulesPage6Text: {fileID: 1728783433}
-  praise1Text: {fileID: 1383113464}
-  praise2Text: {fileID: 331784885}
-  praise3Text: {fileID: 1830103940}
-  praise4Text: {fileID: 985932275}
+  _nextStageText: {fileID: 1538105574}
+  _praise1Text: {fileID: 1383113464}
+  _praise2Text: {fileID: 331784885}
+  _praise3Text: {fileID: 1830103940}
+  _praise4Text: {fileID: 985932275}
+  _yourRewardText: {fileID: 1491323714}
+  _noThanksText: {fileID: 492377159}
+  _congratulationText: {fileID: 1459104234}
+  _yourScoreText: {fileID: 1359705811}
+  _yourBestScoreText: {fileID: 753769720}
+  _newBestScoreText: {fileID: 234410473}
+  _ratingText: {fileID: 347980783}
+  _tryAgainText: {fileID: 1154187599}
+  _menuText: {fileID: 1254288413}
+  _restartText: {fileID: 924451017}
+  _musicText: {fileID: 2051767167}
+  _soundsText: {fileID: 206410133}
+  _wantToRestartText: {fileID: 2665245}
+  _yesText: {fileID: 1546937242}
+  _noText: {fileID: 1112557259}
+  _rulesPage1Text: {fileID: 324535494}
+  _rulesPage2Text: {fileID: 1696869698}
+  _rulesPage3Text: {fileID: 1569490113}
+  _rulesPage4Text: {fileID: 896843008}
+  _rulesPage5Text: {fileID: 501390070}
+  _rulesPage6Text: {fileID: 1728783433}
 --- !u!1 &1403887822
 GameObject:
   m_ObjectHideFlags: 0
@@ -13524,7 +13519,7 @@ GameObject:
   - component: {fileID: 1491323715}
   - component: {fileID: 1491323714}
   m_Layer: 5
-  m_Name: Text (TMP) (1)
+  m_Name: YorRewardText (TMP)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -14129,7 +14124,7 @@ GameObject:
   - component: {fileID: 1538105575}
   - component: {fileID: 1538105574}
   m_Layer: 5
-  m_Name: Text (TMP)
+  m_Name: NextStageText (TMP)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -14264,7 +14259,7 @@ GameObject:
   - component: {fileID: 1546937243}
   - component: {fileID: 1546937242}
   m_Layer: 5
-  m_Name: Text (TMP)
+  m_Name: YesText (TMP)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -14787,7 +14782,7 @@ GameObject:
   - component: {fileID: 1569490114}
   - component: {fileID: 1569490113}
   m_Layer: 5
-  m_Name: Text (TMP) (1)
+  m_Name: Page3Text (TMP)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -16313,7 +16308,7 @@ GameObject:
   - component: {fileID: 1696869699}
   - component: {fileID: 1696869698}
   m_Layer: 5
-  m_Name: Text (TMP) (1)
+  m_Name: Page2Text (TMP)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -16629,7 +16624,7 @@ GameObject:
   - component: {fileID: 1726137243}
   - component: {fileID: 1726137242}
   m_Layer: 5
-  m_Name: RestartButton (1)
+  m_Name: RestartButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -16762,7 +16757,7 @@ GameObject:
   - component: {fileID: 1728783434}
   - component: {fileID: 1728783433}
   m_Layer: 5
-  m_Name: Text (TMP) (1)
+  m_Name: Page6Text (TMP)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -18425,7 +18420,7 @@ GameObject:
   - component: {fileID: 1959429638}
   - component: {fileID: 1959429637}
   m_Layer: 5
-  m_Name: RestartButton (1)
+  m_Name: MenuButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -18985,7 +18980,7 @@ GameObject:
   - component: {fileID: 2008094944}
   - component: {fileID: 2008094943}
   m_Layer: 5
-  m_Name: RestartButton (1)
+  m_Name: RaitingButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

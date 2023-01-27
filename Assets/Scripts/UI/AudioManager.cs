@@ -3,16 +3,16 @@ using UnityEngine;
 public class AudioManager : MonoBehaviour
 {
     public static AudioManager S;
-    [SerializeField] private AudioSource effectAs;
-    [SerializeField] private AudioSource unificationAs;
-    [SerializeField] private AudioSource musicAs;
-    [SerializeField] private AudioSource UiEffectsAs;
+    [SerializeField] private AudioSource _effectAs;
+    [SerializeField] private AudioSource _unificationAs;
+    [SerializeField] private AudioSource _musicAs;
+    [SerializeField] private AudioSource _uiEffectsAs;
 
-    [SerializeField] private AudioClip explosiveAc;
-    [SerializeField] private AudioClip lightningHitAc;
-    [SerializeField] private AudioClip flyAc;
-    [SerializeField] private AudioClip fillingAc;
-    [SerializeField] private AudioClip cristalBreakAc;
+    [SerializeField] private AudioClip _explosiveAc;
+    [SerializeField] private AudioClip _lightningHitAc;
+    [SerializeField] private AudioClip _flyAc;
+    [SerializeField] private AudioClip _fillingAc;
+    [SerializeField] private AudioClip _cristalBreakAc;
 
     private void Awake()
     {
@@ -22,37 +22,37 @@ public class AudioManager : MonoBehaviour
 
     public void PlayUnification()
     {
-        unificationAs.Play();
+        _unificationAs.Play();
     }
 
     public void PlayExplosive()
     {
-        effectAs.PlayOneShot(explosiveAc);
+        _effectAs.PlayOneShot(_explosiveAc);
     }
     public void PlayLightningHit()
     {
-        effectAs.PlayOneShot(lightningHitAc);
+        _effectAs.PlayOneShot(_lightningHitAc);
     }
     public void PlayFly()
     {
-        UiEffectsAs.PlayOneShot(flyAc);
+        _uiEffectsAs.PlayOneShot(_flyAc);
     }
     public void PlayFilling()
     {
-        UiEffectsAs.PlayOneShot(fillingAc);
+        _uiEffectsAs.PlayOneShot(_fillingAc);
     }
     public void PlayCristalBreak()
     {
-        effectAs.PlayOneShot(cristalBreakAc);
+        _effectAs.PlayOneShot(_cristalBreakAc);
     }
     public void SetMusicVolume(float volume)
     {
-        musicAs.volume = volume;
+        _musicAs.volume = volume;
     }
     public void SetSoundsVolume(float volume)
     {
-        effectAs.volume = volume;
-        unificationAs.volume = volume;
-        UiEffectsAs.volume = volume;
+        _effectAs.volume = volume;
+        _unificationAs.volume = volume;
+        _uiEffectsAs.volume = volume;
     }
 }

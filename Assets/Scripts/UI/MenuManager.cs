@@ -125,7 +125,7 @@ public class MenuManager : MonoBehaviour
         else
         {
             IsLoadingNoThank = false;
-            SkillsController.S.IncreaseSkillFilling(SkillsController.S.MaxFillingSkills, MenuManager.S.LastSkillColor);
+            SkillsController.S.IncreaseSkillFilling(SkillsController.S.MaxFillingSkills, LastSkillColor);
             LastSkillColor = eChipColors.no;
             HideAllPanels();
         }

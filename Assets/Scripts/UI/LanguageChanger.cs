@@ -1,37 +1,40 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 
 public class LanguageChanger : MonoBehaviour
 {
-    [SerializeField] private TextMeshProUGUI nextStageText;
-    [SerializeField] private TextMeshProUGUI yourRewardText;
-    [SerializeField] private TextMeshProUGUI noThanksText;
-    [SerializeField] private TextMeshProUGUI congratulationText;
-    [SerializeField] private TextMeshProUGUI yourScoreText;
-    [SerializeField] private TextMeshProUGUI yourBestScoreText;
-    [SerializeField] private TextMeshProUGUI newBestScoreText;
-    [SerializeField] private TextMeshProUGUI ratingText;
-    [SerializeField] private TextMeshProUGUI tryAgainText;
-    [SerializeField] private TextMeshProUGUI menuText;
-    [SerializeField] private TextMeshProUGUI restartText;
-    [SerializeField] private TextMeshProUGUI musicText;
-    [SerializeField] private TextMeshProUGUI soundsText;
-    [SerializeField] private TextMeshProUGUI wantToRestartText;
-    [SerializeField] private TextMeshProUGUI yesText;
-    [SerializeField] private TextMeshProUGUI noText;
-    [SerializeField] private TextMeshProUGUI rulesPage1Text;
-    [SerializeField] private TextMeshProUGUI rulesPage2Text;
-    [SerializeField] private TextMeshProUGUI rulesPage3Text;
-    [SerializeField] private TextMeshProUGUI rulesPage4Text;
-    [SerializeField] private TextMeshProUGUI rulesPage5Text;
-    [SerializeField] private TextMeshProUGUI rulesPage6Text;
-
-    [SerializeField] private TextMeshProUGUI praise1Text;
-    [SerializeField] private TextMeshProUGUI praise2Text;
-    [SerializeField] private TextMeshProUGUI praise3Text;
-    [SerializeField] private TextMeshProUGUI praise4Text;
+    [Header("Next Stage Panel")]
+    [SerializeField] private TextMeshProUGUI _nextStageText;
+    [SerializeField] private TextMeshProUGUI _praise1Text;
+    [SerializeField] private TextMeshProUGUI _praise2Text;
+    [SerializeField] private TextMeshProUGUI _praise3Text;
+    [SerializeField] private TextMeshProUGUI _praise4Text;
+    [Header("New Skill Panel")]
+    [SerializeField] private TextMeshProUGUI _yourRewardText;
+    [SerializeField] private TextMeshProUGUI _noThanksText;
+    [Header("Lose Panel")]
+    [SerializeField] private TextMeshProUGUI _congratulationText;
+    [SerializeField] private TextMeshProUGUI _yourScoreText;
+    [SerializeField] private TextMeshProUGUI _yourBestScoreText;
+    [SerializeField] private TextMeshProUGUI _newBestScoreText;
+    [SerializeField] private TextMeshProUGUI _ratingText;
+    [SerializeField] private TextMeshProUGUI _tryAgainText;
+    [Header("Settings Panel")]
+    [SerializeField] private TextMeshProUGUI _menuText;
+    [SerializeField] private TextMeshProUGUI _restartText;
+    [SerializeField] private TextMeshProUGUI _musicText;
+    [SerializeField] private TextMeshProUGUI _soundsText;
+    [Header("Restart Panel")]
+    [SerializeField] private TextMeshProUGUI _wantToRestartText;
+    [SerializeField] private TextMeshProUGUI _yesText;
+    [SerializeField] private TextMeshProUGUI _noText;
+    [Header("Rules Panel")]
+    [SerializeField] private TextMeshProUGUI _rulesPage1Text;
+    [SerializeField] private TextMeshProUGUI _rulesPage2Text;
+    [SerializeField] private TextMeshProUGUI _rulesPage3Text;
+    [SerializeField] private TextMeshProUGUI _rulesPage4Text;
+    [SerializeField] private TextMeshProUGUI _rulesPage5Text;
+    [SerializeField] private TextMeshProUGUI _rulesPage6Text;
 
     void Awake()
     {
@@ -41,32 +44,32 @@ public class LanguageChanger : MonoBehaviour
 
     private void SetRussian()
     {
-        nextStageText.text = "Новая стадия!";
-        yourRewardText.text = "Награда:";
-        noThanksText.text = "Нет, спасибо";
-        congratulationText.text = "Поздравляем!";
-        yourScoreText.text = "Ваш счет:";
-        yourBestScoreText.text = "Ваш лучший счет:";
-        newBestScoreText.text = "Новый рекорд!";
-        ratingText.text = "Рейтинг";
-        tryAgainText.text = "Еще раз";
-        menuText.text = "Меню";
-        restartText.text = "Переиграть";
-        musicText.text = "Музыка";
-        soundsText.text = "Звуки";
-        wantToRestartText.text = "Хотите начать сначала?";
-        yesText.text = "Да";
-        noText.text = "Нет";
-        rulesPage1Text.text = "Объединяйте фишки с одинаковыми цветом и значением, чтобы получать очки и заряжать соответствующие супер-фишки";
-        rulesPage2Text.text = "Кристаллическая супер-фишка уничтожает несколько фишек в направлении своего движения";
-        rulesPage3Text.text = "Ледяная супер-фишка уничтожает одну фишку на поле и полностью заряжает соответствующую ей супер-фишку";
-        rulesPage4Text.text = "Электрическая супер-фишка уничтожает несколько фишек по цепи";
-        rulesPage5Text.text = "Огненная супер-фишка уничтожает все фишки в области своего взрыва";
-        rulesPage6Text.text = "Со временем на поле появляются колонны, усложняющие игру";
-        praise1Text.text = "Продолжай в том же духе!";
-        praise2Text.text = "Хороший результат!";
-        praise3Text.text = "Отлично!";
-        praise4Text.text = "Молодец!";
+        _nextStageText.text = "Новая стадия!";
+        _yourRewardText.text = "Награда:";
+        _noThanksText.text = "Нет, спасибо";
+        _congratulationText.text = "Поздравляем!";
+        _yourScoreText.text = "Ваш счет:";
+        _yourBestScoreText.text = "Ваш лучший счет:";
+        _newBestScoreText.text = "Новый рекорд!";
+        _ratingText.text = "Рейтинг";
+        _tryAgainText.text = "Еще раз";
+        _menuText.text = "Меню";
+        _restartText.text = "Переиграть";
+        _musicText.text = "Музыка";
+        _soundsText.text = "Звуки";
+        _wantToRestartText.text = "Хотите начать сначала?";
+        _yesText.text = "Да";
+        _noText.text = "Нет";
+        _rulesPage1Text.text = "Объединяйте фишки с одинаковыми цветом и значением, чтобы получать очки и заряжать соответствующие супер-фишки";
+        _rulesPage2Text.text = "Кристаллическая супер-фишка уничтожает несколько фишек в направлении своего движения";
+        _rulesPage3Text.text = "Ледяная супер-фишка уничтожает одну фишку на поле и полностью заряжает соответствующую ей супер-фишку";
+        _rulesPage4Text.text = "Электрическая супер-фишка уничтожает несколько фишек по цепи";
+        _rulesPage5Text.text = "Огненная супер-фишка уничтожает все фишки в области своего взрыва";
+        _rulesPage6Text.text = "Со временем на поле появляются колонны, усложняющие игру";
+        _praise1Text.text = "Продолжай в том же духе!";
+        _praise2Text.text = "Хороший результат!";
+        _praise3Text.text = "Отлично!";
+        _praise4Text.text = "Молодец!";
     }
     private void SetEnglish()
     {
