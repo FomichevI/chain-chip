@@ -2,18 +2,50 @@
   <maxScore value="334" />
   <settings musicOn="1" soundsOn="1" noAddsOn="0" />
   <currentLevel>
-    <chip posX="-2,5" posY="0,5" posZ="9,645972" value="1" color="red" />
-    <chip posX="-1,33738" posY="0,5" posZ="8,792194" value="2" color="purple" />
-    <chip posX="-0,8044585" posY="0,5" posZ="9,973404" value="1" color="green" />
-    <chip posX="-0,358982" posY="0,5" posZ="8,998923" value="1" color="blue" />
-    <chip posX="1,128886" posY="0,5" posZ="10,06673" value="2" color="green" />
-    <chip posX="2,500239" posY="0,5" posZ="10,35575" value="3" color="blue" />
-    <currentChip value="2" color="red" isSkill="0" />
-    <columns first="0" second="0" third="0" />
-    <currentScore value="3" />
-    <greenSkill count="0" filling="0" />
-    <redSkill count="0" filling="0" />
-    <blueSkill count="0" filling="2" />
-    <purpleSkill count="0" filling="1" />
+    <chip posX="-2,5" posY="0,5" posZ="10,5" value="2" color="purple" />
+    <chip posX="-0,7646502" posY="0,5" posZ="10,5" value="1" color="green" />
+    <chip posX="0,2353332" posY="0,5" posZ="10,5" value="2" color="blue" />
+    <chip posX="1,24665" posY="0,5" posZ="10,5" value="2" color="green" />
+    <chip posX="-2,499999" posY="0,5" posZ="9,500076" value="3" color="red" />
+    <chip posX="2,247195" posY="0,5" posZ="10,5" value="4" color="blue" />
+    <chip posX="0,7401947" posY="0,5" posZ="9,637115" value="4" color="blue" />
+    <chip posX="-1,632331" posY="0,5" posZ="10,00291" value="1" color="purple" />
+    <chip posX="-1,630587" posY="0,5" posZ="9,00291" value="1" color="red" />
+    <chip posX="1,592767" posY="0,5" posZ="9,114498" value="3" color="blue" />
+    <chip posX="-2,500001" posY="0,5" posZ="8,500075" value="4" color="red" />
+    <chip posX="-0,4877797" posY="0,5" posZ="9,539328" value="4" color="purple" />
+    <chip posX="2,5" posY="0,5" posZ="9,53374" value="4" color="green" />
+    <chip posX="-0,7652538" posY="0,5" posZ="8,501717" value="3" color="purple" />
+    <chip posX="0,1885714" posY="0,5" posZ="8,802937" value="3" color="green" />
+    <chip posX="-1,631951" posY="0,5" posZ="8,002862" value="3" color="red" />
+    <chip posX="-2,5" posY="0,5" posZ="7,500285" value="3" color="blue" />
+    <chip posX="-1,706352" posY="0,5" posZ="6,892057" value="2" color="purple" />
+    <chip posX="-1,598809" posY="0,5" posZ="5,898389" value="4" color="red" />
+    <chip posX="2,5" posY="0,5" posZ="7,534489" value="3" color="purple" />
+    <chip posX="2,5" posY="0,5" posZ="8,533709" value="1" color="green" />
+    <chip posX="1,041139" posY="0,5" posZ="8,280394" value="1" color="blue" />
+    <chip posX="-0,815424" posY="0,5" posZ="7,425252" value="1" color="red" />
+    <chip posX="1,121962" posY="0,5" posZ="7,283329" value="2" color="green" />
+    <chip posX="0,2098665" posY="0,5" posZ="6,75" value="2" color="blue" />
+    <chip posX="1,976037" posY="0,5" posZ="6,683341" value="1" color="green" />
+    <chip posX="1,075138" posY="0,5" posZ="6,249397" value="3" color="green" />
+    <chip posX="2,5" posY="0,5" posZ="5,828747" value="3" color="blue" />
+    <chip posX="-0,6931213" posY="0,5" posZ="6,322304" value="3" color="green" />
+    <chip posX="0,188106" posY="0,5" posZ="5,628595" value="3" color="blue" />
+    <chip posX="1,577126" posY="0,5" posZ="5,38517" value="3" color="purple" />
+    <chip posX="2,499982" posY="0,5" posZ="4,810416" value="3" color="green" />
+    <chip posX="-0,7513671" posY="0,5" posZ="5,28695" value="3" color="red" />
+    <chip posX="-2,442664" posY="0,5" posZ="3,614114" value="3" color="red" />
+    <chip posX="0,1436531" posY="0,5" posZ="4,4129" value="1" color="red" />
+    <chip posX="-2,478449" posY="0,5" posZ="5,423336" value="3" color="blue" />
+    <chip posX="1,594256" posY="0,5" posZ="4,385225" value="4" color="green" />
+    <chip posX="0,9696204" posY="0,5" posZ="3,576204" value="2" color="purple" />
+    <currentChip value="1" color="purple" isSkill="0" />
+    <columns first="1" second="0" third="1" />
+    <currentScore value="108" />
+    <greenSkill count="1" filling="2" />
+    <redSkill count="1" filling="1" />
+    <blueSkill count="1" filling="6" />
+    <purpleSkill count="0" filling="18" />
   </currentLevel>
 </xml>

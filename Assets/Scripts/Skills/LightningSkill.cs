@@ -47,14 +47,14 @@ public class LightningSkill : SkillChip
     {
         float maxDistance = 3;
         int nearestChip = -1;
-
-        for(int i = 0; i < GameManager.S.ChipsOnTable.Count; i++)
+        List<GameObject> chipsOnTable = GameManager.S.ChipsOnTable;
+        for (int i = 0; i < chipsOnTable.Count; i++)
         {
-            if ((currentChipPos - GameManager.S.ChipsOnTable[i].transform.position).magnitude < maxDistance)
+            if ((currentChipPos - chipsOnTable[i].transform.position).magnitude < maxDistance)
             {
-                if (!_targets.Contains(GameManager.S.ChipsOnTable[i].GetComponent<Chip>()))
+                if (!_targets.Contains(chipsOnTable[i].GetComponent<Chip>()))
                 {
-                    maxDistance = (currentChipPos - GameManager.S.ChipsOnTable[i].transform.position).magnitude;
+                    maxDistance = (currentChipPos - chipsOnTable[i].transform.position).magnitude;
                     nearestChip = i;
                 }
             }
@@ -66,8 +66,8 @@ public class LightningSkill : SkillChip
         }
         else
         {
-            _targets.Add(GameManager.S.ChipsOnTable[nearestChip].GetComponent<Chip>());
-            return GameManager.S.ChipsOnTable[nearestChip].transform.position;
+            _targets.Add(chipsOnTable[nearestChip].GetComponent<Chip>());
+            return chipsOnTable[nearestChip].transform.position;
         }
     }
 

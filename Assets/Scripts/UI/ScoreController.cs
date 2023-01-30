@@ -15,7 +15,10 @@ public class ScoreController : MonoBehaviour
         if (S == null)
             S = this;
     }
-
+    private void Start()
+    {
+        SetScoreAndStage(XmlReader.S.GetScore());
+    }
     public void RaiseScore(int value, Vector3 pos, eChipColors color)
     {
         _score += value;

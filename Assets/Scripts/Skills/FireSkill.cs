@@ -33,9 +33,9 @@ public class FireSkill : SkillChip
         {
             foreach (GameObject go in _chipsInRadius)
             {
-                Chip goCc = go.GetComponent<Chip>();
-                ScoreController.S.RaiseScore(goCc.СhipValue, go.transform.position, goCc.СhipColor);
-                goCc.DestroyGO();
+                Chip goC = go.GetComponent<Chip>();
+                ScoreController.S.RaiseScore(goC.СhipValue, go.transform.position, goC.СhipColor);
+                goC.DestroyGO();
             }
             EffectsController.S.ShowExplosionEffect(transform.position);
             AudioManager.S.PlayExplosive();

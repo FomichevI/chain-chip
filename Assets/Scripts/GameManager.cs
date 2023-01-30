@@ -33,26 +33,23 @@ public class GameManager : MonoBehaviour
     {
         if (S == null)
             S = this;
-    }
 
-    private void Start()
-    {
         _startPos = new Vector3(0, 0.5f, 0);
-        MenuManager.S.SetSoundsSettings();
-
         if (XmlReader.S.HasSave())
         {
             LoadLevel();
         }
         else
         {
-            if (XmlReader.S.GetMaxScore() == 0) //если нет сохраненного уровня и не найдено никакого результата в сохранениях, то начинаем игру с панели меню
-                MenuManager.S.ShowMenuPanel();
             GameObject chipGO = Instantiate(_chipPrefab, _startPos, Quaternion.Euler(Vector3.zero));
             chipGO.GetComponent<Chip>().SetColorAndValue();
             _chipOnStartPosition = chipGO;
             GenerateStartLevel();
         }
+    }
+
+    private void Start()
+    {
     }
 
     private void GenerateStartLevel()

@@ -38,7 +38,7 @@ public class XmlReader : MonoBehaviour
         else
             return false;
     }
-    public void LoadLevel(ref Column[] columnsContr)
+    public void LoadLevel(ref Column[] columnsContr)//загружаем уровень
     {
         _saveX = new XmlDocument();
         _saveX.Load(_path + "/SaveXML.xml");
@@ -92,29 +92,47 @@ public class XmlReader : MonoBehaviour
         //загружаем столбы
         XmlNode columnsNode = levelElem.SelectSingleNode("columns");
         if (int.Parse(columnsNode.Attributes["first"].Value) == 1)
-        {
             columnsContr[0].SetUp();
-        }
+
         if (int.Parse(columnsNode.Attributes["second"].Value) == 1)
-        {
             columnsContr[1].SetUp();
-        }
+
         if (int.Parse(columnsNode.Attributes["third"].Value) == 1)
-        {
             columnsContr[2].SetUp();
-        }
-        //загружаем счет
+    }
+    public int GetScore()//загружаем счет
+    {
+        _saveX = new XmlDocument();
+        _saveX.Load(_path + "/SaveXML.xml");
+        XmlNode xml = _saveX.SelectSingleNode("xml");
+        XmlNodeList levelNodeList = xml.SelectNodes("currentLevel");
+        XmlElement levelElem = (XmlElement)levelNodeList[0];
         XmlNode currentScoreNode = levelElem.SelectSingleNode("currentScore");
-        ScoreController.S.SetScoreAndStage(int.Parse(currentScoreNode.Attributes["value"].Value));
-        //загружаем заполнения скиллов
+        return int.Parse(currentScoreNode.Attributes["value"].Value);
+    }
+    public void GetSkillsFilling(ref int[,] countAndFilling, ref eChipColors[] colors)//загружаем заполнения скиллов
+    {
+        _saveX = new XmlDocument();
+        _saveX.Load(_path + "/SaveXML.xml");
+        XmlNode xml = _saveX.SelectSingleNode("xml");
+        XmlNodeList levelNodeList = xml.SelectNodes("currentLevel");
+        XmlElement levelElem = (XmlElement)levelNodeList[0];
         XmlNode greenSkillNode = levelElem.SelectSingleNode("greenSkill");
-        SkillsController.S.SetSkillFilling(int.Parse(greenSkillNode.Attributes["count"].Value), int.Parse(greenSkillNode.Attributes["filling"].Value), eChipColors.green);
+        countAndFilling[0, 0] = int.Parse(greenSkillNode.Attributes["count"].Value);
+        countAndFilling[1, 0] = int.Parse(greenSkillNode.Attributes["filling"].Value);
+        colors[0] = eChipColors.green;
         XmlNode redSkillNode = levelElem.SelectSingleNode("redSkill");
-        SkillsController.S.SetSkillFilling(int.Parse(redSkillNode.Attributes["count"].Value), int.Parse(redSkillNode.Attributes["filling"].Value), eChipColors.red);
+        countAndFilling[0, 1] = int.Parse(redSkillNode.Attributes["count"].Value);
+        countAndFilling[1, 1] = int.Parse(redSkillNode.Attributes["filling"].Value);
+        colors[1] = eChipColors.red;
         XmlNode blueSkillNode = levelElem.SelectSingleNode("blueSkill");
-        SkillsController.S.SetSkillFilling(int.Parse(blueSkillNode.Attributes["count"].Value), int.Parse(blueSkillNode.Attributes["filling"].Value), eChipColors.blue);
+        countAndFilling[0, 2] = int.Parse(blueSkillNode.Attributes["count"].Value);
+        countAndFilling[1, 2] = int.Parse(blueSkillNode.Attributes["filling"].Value);
+        colors[2] = eChipColors.blue;
         XmlNode purpleSkillNode = levelElem.SelectSingleNode("purpleSkill");
-        SkillsController.S.SetSkillFilling(int.Parse(purpleSkillNode.Attributes["count"].Value), int.Parse(purpleSkillNode.Attributes["filling"].Value), eChipColors.purple);
+        countAndFilling[0, 3] = int.Parse(purpleSkillNode.Attributes["count"].Value);
+        countAndFilling[1, 3] = int.Parse(purpleSkillNode.Attributes["filling"].Value);
+        colors[3] = eChipColors.purple;
     }
     public int GetMaxScore()
     {

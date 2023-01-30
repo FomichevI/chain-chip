@@ -6,7 +6,7 @@ public class MenuManager : MonoBehaviour
 {
     public static MenuManager S;
 
-    [HideInInspector] public eChipColors LastSkillColor;
+    [HideInInspector] public eChipColors LastSkillColor = eChipColors.no;
     [SerializeField] private GameObject _nextStagePanel;
     [SerializeField] private GameObject _newSkillPanel;
     [SerializeField] private GameObject _losePanel;
@@ -57,6 +57,12 @@ public class MenuManager : MonoBehaviour
             _noAdsBut.SetActive(true);
         else
             _noAdsBut.SetActive(false);
+        SetSoundsSettings();
+        if (!XmlReader.S.HasSave())
+        {
+            if (XmlReader.S.GetMaxScore() == 0) //если нет сохраненного уровня и не найдено никакого результата в сохранениях, то начинаем игру с панели меню
+                ShowMenuPanel();
+        }
     }
 
     public void ShowNextStagePanel()

@@ -12588,7 +12588,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: acb28f14f32b3c846b5ff0ab4b7144ad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  LastSkillColor: 0
+  LastSkillColor: 4
   _nextStagePanel: {fileID: 697086161}
   _newSkillPanel: {fileID: 1569314309}
   _losePanel: {fileID: 969167257}

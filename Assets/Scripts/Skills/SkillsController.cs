@@ -40,6 +40,15 @@ public class SkillsController : MonoBehaviour
         if (S == null)
             S = this;
     }
+    private void Start()
+    {
+        //заргужаем заполнение скиллов
+        int[,] countAndFilling = new int[2, 4];
+        eChipColors[] colors = new eChipColors[4];
+        XmlReader.S.GetSkillsFilling(ref countAndFilling, ref colors);
+        for (int i = 0; i < colors.Length; i++)
+            SetSkillFilling(countAndFilling[0, i], countAndFilling[1, i], colors[i]);
+    }
 
     public void IncreaseSkillFilling(int value, eChipColors type)
     {
