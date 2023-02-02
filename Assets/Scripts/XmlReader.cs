@@ -21,8 +21,8 @@ public class XmlReader : MonoBehaviour
         _saveX = new XmlDocument();
         _saveX.Load(_path + "/SaveXML.xml");
         XmlNode xml = _saveX.SelectSingleNode("xml");
-        XmlNodeList levelNodeList = xml.SelectNodes("currentLevel");
-        if (levelNodeList[0] != null)
+        XmlNode levelNode = xml.SelectSingleNode("currentLevel");
+        if (levelNode != null)
             return true;
         else
             return false;
@@ -32,8 +32,8 @@ public class XmlReader : MonoBehaviour
         _saveX = new XmlDocument();
         _saveX.Load(_path + "/SaveXML.xml");
         XmlNode xml = _saveX.SelectSingleNode("xml");
-        XmlNodeList levelNodeList = xml.SelectNodes("settings");
-        if (levelNodeList[0].Attributes["noAddsOn"].Value == "1")
+        XmlNode settingsNode = xml.SelectSingleNode("settings");
+        if (settingsNode.Attributes["noAddsOn"].Value == "1")
             return true;
         else
             return false;
@@ -43,8 +43,8 @@ public class XmlReader : MonoBehaviour
         _saveX = new XmlDocument();
         _saveX.Load(_path + "/SaveXML.xml");
         XmlNode xml = _saveX.SelectSingleNode("xml");
-        XmlNodeList levelNodeList = xml.SelectNodes("currentLevel");
-        XmlElement levelElem = (XmlElement)levelNodeList[0];
+        XmlNode levelNode = xml.SelectSingleNode("currentLevel");
+        XmlElement levelElem = (XmlElement)levelNode;
         XmlNodeList chipsOnTableNodeList = levelElem.SelectNodes("chip");
 
         System.Globalization.CultureInfo ci = (System.Globalization.CultureInfo)System.Globalization.CultureInfo.CurrentCulture.Clone();
@@ -105,34 +105,50 @@ public class XmlReader : MonoBehaviour
         _saveX = new XmlDocument();
         _saveX.Load(_path + "/SaveXML.xml");
         XmlNode xml = _saveX.SelectSingleNode("xml");
-        XmlNodeList levelNodeList = xml.SelectNodes("currentLevel");
-        XmlElement levelElem = (XmlElement)levelNodeList[0];
-        XmlNode currentScoreNode = levelElem.SelectSingleNode("currentScore");
-        return int.Parse(currentScoreNode.Attributes["value"].Value);
+        XmlNode levelNode = xml.SelectSingleNode("currentLevel");
+        if (levelNode != null)
+        {
+            XmlElement levelElem = (XmlElement)levelNode;
+            XmlNode currentScoreNode = levelElem.SelectSingleNode("currentScore");
+            if (currentScoreNode != null)
+                return int.Parse(currentScoreNode.Attributes["value"].Value);
+            else
+                return 0;
+        }
+        else
+        {
+            return 0;
+        }
     }
     public void GetSkillsFilling(ref int[,] countAndFilling, ref eChipColors[] colors)//загружаем заполнения скиллов
     {
         _saveX = new XmlDocument();
         _saveX.Load(_path + "/SaveXML.xml");
         XmlNode xml = _saveX.SelectSingleNode("xml");
-        XmlNodeList levelNodeList = xml.SelectNodes("currentLevel");
-        XmlElement levelElem = (XmlElement)levelNodeList[0];
-        XmlNode greenSkillNode = levelElem.SelectSingleNode("greenSkill");
-        countAndFilling[0, 0] = int.Parse(greenSkillNode.Attributes["count"].Value);
-        countAndFilling[1, 0] = int.Parse(greenSkillNode.Attributes["filling"].Value);
-        colors[0] = eChipColors.green;
-        XmlNode redSkillNode = levelElem.SelectSingleNode("redSkill");
-        countAndFilling[0, 1] = int.Parse(redSkillNode.Attributes["count"].Value);
-        countAndFilling[1, 1] = int.Parse(redSkillNode.Attributes["filling"].Value);
-        colors[1] = eChipColors.red;
-        XmlNode blueSkillNode = levelElem.SelectSingleNode("blueSkill");
-        countAndFilling[0, 2] = int.Parse(blueSkillNode.Attributes["count"].Value);
-        countAndFilling[1, 2] = int.Parse(blueSkillNode.Attributes["filling"].Value);
-        colors[2] = eChipColors.blue;
-        XmlNode purpleSkillNode = levelElem.SelectSingleNode("purpleSkill");
-        countAndFilling[0, 3] = int.Parse(purpleSkillNode.Attributes["count"].Value);
-        countAndFilling[1, 3] = int.Parse(purpleSkillNode.Attributes["filling"].Value);
-        colors[3] = eChipColors.purple;
+        XmlNode levelNode = xml.SelectSingleNode("currentLevel");
+        if (levelNode != null)
+        {
+            XmlElement levelElem = (XmlElement)levelNode;
+            XmlNode greenSkillNode = levelElem.SelectSingleNode("greenSkill");
+            if (greenSkillNode != null)
+            {
+                countAndFilling[0, 0] = int.Parse(greenSkillNode.Attributes["count"].Value);
+                countAndFilling[1, 0] = int.Parse(greenSkillNode.Attributes["filling"].Value);
+                colors[0] = eChipColors.green;
+                XmlNode redSkillNode = levelElem.SelectSingleNode("redSkill");
+                countAndFilling[0, 1] = int.Parse(redSkillNode.Attributes["count"].Value);
+                countAndFilling[1, 1] = int.Parse(redSkillNode.Attributes["filling"].Value);
+                colors[1] = eChipColors.red;
+                XmlNode blueSkillNode = levelElem.SelectSingleNode("blueSkill");
+                countAndFilling[0, 2] = int.Parse(blueSkillNode.Attributes["count"].Value);
+                countAndFilling[1, 2] = int.Parse(blueSkillNode.Attributes["filling"].Value);
+                colors[2] = eChipColors.blue;
+                XmlNode purpleSkillNode = levelElem.SelectSingleNode("purpleSkill");
+                countAndFilling[0, 3] = int.Parse(purpleSkillNode.Attributes["count"].Value);
+                countAndFilling[1, 3] = int.Parse(purpleSkillNode.Attributes["filling"].Value);
+                colors[3] = eChipColors.purple;
+            }
+        }
     }
     public int GetMaxScore()
     {
@@ -142,13 +158,22 @@ public class XmlReader : MonoBehaviour
         XmlNode scoreNode = xml.SelectSingleNode("maxScore");
         return int.Parse(scoreNode.Attributes["value"].Value);
     }
+    public int GetCurrentScore()
+    {
+        _saveX = new XmlDocument();
+        _saveX.Load(_path + "/SaveXML.xml");
+        XmlNode xml = _saveX.SelectSingleNode("xml");
+        XmlNode level = xml.SelectSingleNode("currentLevel");
+        XmlNode currentScore = level.SelectSingleNode("currentScore");
+        return int.Parse(currentScore.Attributes["value"].Value);
+    }
     public bool GetSoundsOn()
     {
         _saveX = new XmlDocument();
         _saveX.Load(_path + "/SaveXML.xml");
         XmlNode xml = _saveX.SelectSingleNode("xml");
-        XmlNodeList nodeList = xml.SelectNodes("settings");
-        if (int.Parse(nodeList[0].Attributes["soundsOn"].Value) == 1)
+        XmlNode node = xml.SelectSingleNode("settings");
+        if (int.Parse(node.Attributes["soundsOn"].Value) == 1)
             return true;
         else
             return false;
@@ -158,8 +183,8 @@ public class XmlReader : MonoBehaviour
         _saveX = new XmlDocument();
         _saveX.Load(_path + "/SaveXML.xml");
         XmlNode xml = _saveX.SelectSingleNode("xml");
-        XmlNodeList nodeList = xml.SelectNodes("settings");
-        if (int.Parse(nodeList[0].Attributes["musicOn"].Value) == 1)
+        XmlNode node = xml.SelectSingleNode("settings");
+        if (int.Parse(node.Attributes["musicOn"].Value) == 1)
             return true;
         else
             return false;

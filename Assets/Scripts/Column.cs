@@ -41,7 +41,7 @@ public class Column : MonoBehaviour
         {
             if (other.gameObject.layer == 3)
             {
-                EffectsController.S.ShowHitEffect(other.transform.position, other.GetComponent<Chip>().СhipColor);
+                EventAggregator.ShowDestroyEffect.Invoke(other.transform.position, other.GetComponent<Chip>().СhipColor);
                 Destroy(other.gameObject);
             }
         }

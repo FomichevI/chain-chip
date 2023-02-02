@@ -4,9 +4,7 @@ using TMPro;
 
 public class SkillsController : MonoBehaviour
 {
-    public static SkillsController S;
-
-    public int MaxFillingSkills = 25;
+    public readonly int MaxFillingSkills = 25;
     //image для отображения заполнения скиллов
     [SerializeField] private Image _fireFillingImg;
     [SerializeField] private Image _frostFillingImg;
@@ -35,10 +33,15 @@ public class SkillsController : MonoBehaviour
     private int _currentCristalSkillCount = 0;
     private int _currentLightningSkillCount = 0;
 
-    void Awake()
+    private void OnEnable()
     {
-        if (S == null)
-            S = this;
+        EventAggregator.IncreaseSkillFilling.AddListener(IncreaseSkillFilling);
+        EventAggregator.FullSkill.AddListener(FullSkill);
+    }
+    private void OnDisable()
+    {
+        EventAggregator.IncreaseSkillFilling.RemoveListener(IncreaseSkillFilling);
+        EventAggregator.FullSkill.RemoveListener(FullSkill);
     }
     private void Start()
     {
@@ -48,6 +51,11 @@ public class SkillsController : MonoBehaviour
         XmlReader.S.GetSkillsFilling(ref countAndFilling, ref colors);
         for (int i = 0; i < colors.Length; i++)
             SetSkillFilling(countAndFilling[0, i], countAndFilling[1, i], colors[i]);
+    }
+
+    private void FullSkill(eChipColors type)
+    {
+        IncreaseSkillFilling(MaxFillingSkills, type);
     }
 
     public void IncreaseSkillFilling(int value, eChipColors type)
@@ -62,10 +70,10 @@ public class SkillsController : MonoBehaviour
         {
             case eChipColors.green:
                 currentFillingSkill = ref _currentFillingCristalSkill;
-                currentSkillCount =ref  _currentCristalSkillCount;
-                skillBtn =ref  _cristalSkillBtn;
-                skillEffect =ref  _cristalSkillEffect;
-                fillingImg =ref _cristalFillingImg;
+                currentSkillCount = ref _currentCristalSkillCount;
+                skillBtn = ref _cristalSkillBtn;
+                skillEffect = ref _cristalSkillEffect;
+                fillingImg = ref _cristalFillingImg;
                 skillCountText = ref _cristalSkillCountText;
                 break;
             case eChipColors.red:
@@ -97,10 +105,16 @@ public class SkillsController : MonoBehaviour
             skillBtn.interactable = true;
             skillEffect.SetActive(true);
             Invoke("UnactiveFrostEffect", 1f);
-            AudioManager.S.PlayFilling();
-            MenuManager.S.LastSkillColor = type;
+            EventAggregator.SkillFilled.Invoke(type);
         }
         fillingImg.fillAmount = currentFillingSkill / MaxFillingSkills;
+        SaveSkills();
+    }
+
+    private void SaveSkills()
+    {
+        XMLSaver.S.SaveSkillsFilling(_currentFillingCristalSkill, _currentFillingFireSkill, _currentFillingFrostSkill, _currentFillingLightningSkill,
+            _currentCristalSkillCount, _currentFireSkillCount, _currentFrostSkillCount, _currentLightningSkillCount);
     }
 
     public void SetSkillFilling(int count, int value, eChipColors type)
@@ -151,10 +165,9 @@ public class SkillsController : MonoBehaviour
             _currentFireSkillCount -= 1;
             _fireSkillCountText.text = _currentFireSkillCount.ToString();
             GameManager.S.SetSkillChip(eChipColors.red);
-            if (_currentFireSkillCount == 0)
-            {
+            if (_currentFireSkillCount == 0)            
                 _fireSkillBtn.interactable = false;
-            }
+            SaveSkills();
         }
     }
     public void UseFrostSkill()
@@ -164,10 +177,9 @@ public class SkillsController : MonoBehaviour
             _currentFrostSkillCount -= 1;
             _frostSkillCountText.text = _currentFrostSkillCount.ToString();
             GameManager.S.SetSkillChip(eChipColors.blue);
-            if (_currentFrostSkillCount == 0)
-            {
+            if (_currentFrostSkillCount == 0)            
                 _frostSkillBtn.interactable = false;
-            }
+            SaveSkills();
         }
     }
     public void UseLightningSkill()
@@ -178,9 +190,8 @@ public class SkillsController : MonoBehaviour
             _lightningSkillCountText.text = _currentLightningSkillCount.ToString();
             GameManager.S.SetSkillChip(eChipColors.purple);
             if (_currentLightningSkillCount == 0)
-            {
                 _lightningSkillBtn.interactable = false;
-            }
+            SaveSkills();
         }
     }
     public void UseCristalSkill()
@@ -190,10 +201,9 @@ public class SkillsController : MonoBehaviour
             _currentCristalSkillCount -= 1;
             _cristalSkillCountText.text = _currentCristalSkillCount.ToString();
             GameManager.S.SetSkillChip(eChipColors.green);
-            if (_currentCristalSkillCount == 0)
-            {
+            if (_currentCristalSkillCount == 0)            
                 _cristalSkillBtn.interactable = false;
-            }
+            SaveSkills();
         }
     }
     public float GetFilling(eChipColors color)

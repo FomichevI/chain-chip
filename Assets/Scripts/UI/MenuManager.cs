@@ -4,9 +4,7 @@ using TMPro;
 
 public class MenuManager : MonoBehaviour
 {
-    public static MenuManager S;
-
-    [HideInInspector] public eChipColors LastSkillColor = eChipColors.no;
+    private eChipColors _lastSkillColor = eChipColors.no; //переменная, определяющая, какой скилл заполнился после прошлого хода (или никакой)
     [SerializeField] private GameObject _nextStagePanel;
     [SerializeField] private GameObject _newSkillPanel;
     [SerializeField] private GameObject _losePanel;
@@ -44,13 +42,20 @@ public class MenuManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI _currentScoreText;
     [SerializeField] private TextMeshProUGUI _lastScoreText;
 
-
-    private void Awake()
+    private void OnEnable()
     {
-        if (S == null)
-            S = this;
+        EventAggregator.Lose.AddListener(ShowLosePanel);
+        EventAggregator.NewStage.AddListener(ShowNextStagePanel);
+        EventAggregator.AddNewSkill.AddListener(ShowNewSkillPanel);
+        EventAggregator.SkillFilled.AddListener(SkillFilled);
+}
+    private void OnDisable()
+    {
+        EventAggregator.Lose.RemoveListener(ShowLosePanel);
+        EventAggregator.NewStage.RemoveListener(ShowNextStagePanel);
+        EventAggregator.AddNewSkill.RemoveListener(ShowNewSkillPanel);
+        EventAggregator.SkillFilled.RemoveListener(SkillFilled);
     }
-
     private void Start()
     {
         if (!XmlReader.S.NoAddsMode())
@@ -63,6 +68,11 @@ public class MenuManager : MonoBehaviour
             if (XmlReader.S.GetMaxScore() == 0) //если нет сохраненного уровня и не найдено никакого результата в сохранениях, то начинаем игру с панели меню
                 ShowMenuPanel();
         }
+    }
+
+    private void SkillFilled(eChipColors color)
+    {
+        _lastSkillColor = color;
     }
 
     public void ShowNextStagePanel()
@@ -90,13 +100,13 @@ public class MenuManager : MonoBehaviour
     }
     public void ShowNewSkillPanel()
     {
-        if (!_isActiveStageOrSkillPanel && LastSkillColor != eChipColors.no)
+        if (!_isActiveStageOrSkillPanel && _lastSkillColor != eChipColors.no)
         {
             _isActiveStageOrSkillPanel = true;
             _newSkillPanel.SetActive(true);
             StartCoroutine(ShowNoThanksBut());
             HideSkillsImgs();
-            switch (LastSkillColor)
+            switch (_lastSkillColor)
             {
                 case eChipColors.green:
                     foreach (GameObject go in _cristalSkillImgs)
@@ -118,7 +128,7 @@ public class MenuManager : MonoBehaviour
         }
         else
         {
-            LastSkillColor = eChipColors.no;
+            _lastSkillColor = eChipColors.no;
         }
     }
     public void ShowAdd()
@@ -131,8 +141,8 @@ public class MenuManager : MonoBehaviour
         else
         {
             IsLoadingNoThank = false;
-            SkillsController.S.IncreaseSkillFilling(SkillsController.S.MaxFillingSkills, LastSkillColor);
-            LastSkillColor = eChipColors.no;
+            EventAggregator.FullSkill.Invoke(_lastSkillColor);
+            _lastSkillColor = eChipColors.no;
             HideAllPanels();
         }
     }
@@ -147,12 +157,12 @@ public class MenuManager : MonoBehaviour
     {
         HideAllPanels();
         _losePanel.SetActive(true);
-        if (ScoreController.S.GetScore() > XmlReader.S.GetMaxScore())
+        if (XmlReader.S.GetCurrentScore() > XmlReader.S.GetMaxScore())
         {
             foreach (GameObject go in _lastScoreObjs)
                 go.SetActive(false);
             _newBestScoreObj.SetActive(true);
-            XMLSaver.S.SetMaxScore(ScoreController.S.GetScore());
+            XMLSaver.S.SetMaxScore(XmlReader.S.GetCurrentScore());
         }
         else
         {
@@ -161,7 +171,7 @@ public class MenuManager : MonoBehaviour
             _newBestScoreObj.SetActive(false);
             _lastScoreText.text = XmlReader.S.GetMaxScore().ToString();
         }
-        _currentScoreText.text = ScoreController.S.GetScore().ToString();
+        _currentScoreText.text = XmlReader.S.GetCurrentScore().ToString();
         //if (ScoreController.S.GetScore() >= 250)
         //RManager.S.ShowRewie();
     }
@@ -212,7 +222,7 @@ public class MenuManager : MonoBehaviour
         _noThanksBut.SetActive(false);
         IsLoadingNoThank = false;
         _isActiveStageOrSkillPanel = false;
-        LastSkillColor = eChipColors.no;
+        _lastSkillColor = eChipColors.no;
         _logo.SetActive(false);
     }
 
@@ -269,22 +279,22 @@ public class MenuManager : MonoBehaviour
         if (XmlReader.S.GetMusicOn())
         {
             _musicCheckBoxImg.SetActive(true);
-            AudioManager.S.SetMusicVolume(1);
+            EventAggregator.SetMusicVolume.Invoke(1);
         }
         else
         {
             _musicCheckBoxImg.SetActive(false);
-            AudioManager.S.SetMusicVolume(0);
+            EventAggregator.SetMusicVolume.Invoke(0);
         }
         if (XmlReader.S.GetSoundsOn())
         {
             _soundsCheckBoxImg.SetActive(true);
-            AudioManager.S.SetSoundsVolume(1);
+            EventAggregator.SetSoundsVolume.Invoke(1);
         }
         else
         {
             _soundsCheckBoxImg.SetActive(false);
-            AudioManager.S.SetSoundsVolume(0);
+            EventAggregator.SetSoundsVolume.Invoke(0);
         }
     }
     public void Play()

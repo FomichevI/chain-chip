@@ -2,8 +2,6 @@ using UnityEngine;
 
 public class EffectsController : MonoBehaviour
 {
-    public static EffectsController S;
-
     [SerializeField] private GameObject _hitGreenPsPrefab;
     [SerializeField] private GameObject _hitRedPsPrefab;
     [SerializeField] private GameObject _hitPurplePsPrefab;
@@ -13,14 +11,20 @@ public class EffectsController : MonoBehaviour
     [SerializeField] private GameObject _frostExpPsPrefab;
     [SerializeField] private GameObject _cristalHitPsPrefab;
 
-    private void Awake()
+    private void OnEnable()
     {
-        if (S == null)
-        {
-            S = this;
-        }
+        EventAggregator.DestroyCristal.AddListener(ShowCristalHitEffect);
+        EventAggregator.DestroyFire.AddListener(ShowExplosionEffect);
+        EventAggregator.DestroyFrost.AddListener(ShowFrostEffect);
+        EventAggregator.ShowDestroyEffect.AddListener(ShowHitEffect);
     }
-
+    private void OnDisable()
+    {
+        EventAggregator.DestroyCristal.RemoveListener(ShowCristalHitEffect);
+        EventAggregator.DestroyFire.RemoveListener(ShowExplosionEffect);
+        EventAggregator.DestroyFrost.RemoveListener(ShowFrostEffect);
+        EventAggregator.ShowDestroyEffect.RemoveListener(ShowHitEffect);
+    }
     public void ShowHitEffect(Vector3 pos, eChipColors col)
     {
         GameObject ps;

@@ -360,6 +360,7 @@
 "Assets/Scripts/Chip.cs"
 "Assets/Scripts/Column.cs"
 "Assets/Scripts/EffectsController.cs"
+"Assets/Scripts/EventAggregator.cs"
 "Assets/Scripts/GameManager.cs"
 "Assets/Scripts/PlusScore.cs"
 "Assets/Scripts/Skills/CristalSkill.cs"

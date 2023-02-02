@@ -2,7 +2,6 @@ using UnityEngine;
 
 public class AudioManager : MonoBehaviour
 {
-    public static AudioManager S;
     [SerializeField] private AudioSource _effectAs;
     [SerializeField] private AudioSource _unificationAs;
     [SerializeField] private AudioSource _musicAs;
@@ -14,10 +13,27 @@ public class AudioManager : MonoBehaviour
     [SerializeField] private AudioClip _fillingAc;
     [SerializeField] private AudioClip _cristalBreakAc;
 
-    private void Awake()
+    private void OnEnable()
     {
-        if (S == null)
-            S = this;
+        EventAggregator.UnificationSound.AddListener(PlayUnification);
+        EventAggregator.DestroyCristal.AddListener(PlayCristalBreak);
+        EventAggregator.DestroyFire.AddListener(PlayExplosive);
+        EventAggregator.UseLightning.AddListener(PlayLightningHit);
+        EventAggregator.SetMusicVolume.AddListener(SetMusicVolume);
+        EventAggregator.SetSoundsVolume.AddListener(SetSoundsVolume);
+        EventAggregator.ThrowChip.AddListener(PlayFly);
+        EventAggregator.SkillFilled.AddListener(PlayFilling);
+    }
+    private void OnDisable()
+    {
+        EventAggregator.UnificationSound.RemoveListener(PlayUnification);
+        EventAggregator.DestroyCristal.RemoveListener(PlayCristalBreak);
+        EventAggregator.DestroyFire.RemoveListener(PlayExplosive);
+        EventAggregator.UseLightning.RemoveListener(PlayLightningHit);
+        EventAggregator.SetMusicVolume.RemoveListener(SetMusicVolume);
+        EventAggregator.SetSoundsVolume.RemoveListener(SetSoundsVolume);
+        EventAggregator.ThrowChip.RemoveListener(PlayFly);
+        EventAggregator.SkillFilled.RemoveListener(PlayFilling);
     }
 
     public void PlayUnification()
@@ -25,7 +41,7 @@ public class AudioManager : MonoBehaviour
         _unificationAs.Play();
     }
 
-    public void PlayExplosive()
+    public void PlayExplosive(Vector3 pos)
     {
         _effectAs.PlayOneShot(_explosiveAc);
     }
@@ -37,11 +53,11 @@ public class AudioManager : MonoBehaviour
     {
         _uiEffectsAs.PlayOneShot(_flyAc);
     }
-    public void PlayFilling()
+    public void PlayFilling(eChipColors color)
     {
         _uiEffectsAs.PlayOneShot(_fillingAc);
     }
-    public void PlayCristalBreak()
+    public void PlayCristalBreak(Vector3 pos)
     {
         _effectAs.PlayOneShot(_cristalBreakAc);
     }

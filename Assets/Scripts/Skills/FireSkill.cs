@@ -34,11 +34,10 @@ public class FireSkill : SkillChip
             foreach (GameObject go in _chipsInRadius)
             {
                 Chip goC = go.GetComponent<Chip>();
-                ScoreController.S.RaiseScore(goC.СhipValue, go.transform.position, goC.СhipColor);
+                EventAggregator.ChipUnification.Invoke(goC.СhipValue, go.transform.position, goC.СhipColor);
                 goC.DestroyGO();
             }
-            EffectsController.S.ShowExplosionEffect(transform.position);
-            AudioManager.S.PlayExplosive();
+            EventAggregator.DestroyFire.Invoke(transform.position);
             Destroy(gameObject);
         }
         base.UseSkillOnCollisionEnter(col);

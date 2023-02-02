@@ -94,7 +94,7 @@ public class Chip : MonoBehaviour
             _timeUntilGameOver -= Time.deltaTime;
         if (_timeUntilGameOver <= 0 && !GameManager.S.IsFailing)
         {
-            MenuManager.S.ShowLosePanel();
+            EventAggregator.Lose.Invoke();
             GameManager.S.IsFailing = true;
             XMLSaver.S.UnnullTable();
         }
@@ -125,10 +125,10 @@ public class Chip : MonoBehaviour
                         {
                             targetC.RaiseValue();
                         }
-                        SkillsController.S.IncreaseSkillFilling(СhipValue, СhipColor);
-                        ScoreController.S.RaiseScore(СhipValue, transform.position, СhipColor);
+                        EventAggregator.IncreaseSkillFilling.Invoke(СhipValue, СhipColor);
+                        EventAggregator.ChipUnification.Invoke(СhipValue, transform.position, СhipColor);
+                        EventAggregator.UnificationSound.Invoke();
                         DestroyGO();
-                        AudioManager.S.PlayUnification();
                     }
                 }
             }
@@ -137,7 +137,7 @@ public class Chip : MonoBehaviour
 
     public void DestroyGO()
     {        
-        EffectsController.S.ShowHitEffect(transform.position, СhipColor);
+        EventAggregator.ShowDestroyEffect.Invoke(transform.position, СhipColor);
         Destroy(gameObject);
     }
     private void OnDestroy()

@@ -57,12 +57,27 @@ public class XMLSaver : MonoBehaviour
         _saveX.Load(_path + "/SaveXML.xml");
         //удаляем старое сохранение уровня
         XmlNode xml = _saveX.SelectSingleNode("xml");
-        XmlNodeList levelNodeList = xml.SelectNodes("currentLevel");
-        if(levelNodeList[0] != null)
-            _saveX.DocumentElement.RemoveChild(levelNodeList[0]);
-
+        XmlNode level = xml.SelectSingleNode("currentLevel");
+        if (level != null)
+        {
+            XmlNodeList chipElem = level.SelectNodes("chip");
+            if (chipElem[0] != null)
+                foreach (XmlNode node in chipElem)
+                    level.RemoveChild(node);
+            XmlNode currentСhip = level.SelectSingleNode("currentChip");
+            if (currentСhip != null)
+                level.RemoveChild(currentСhip);
+            XmlNode columns = level.SelectSingleNode("columns");
+            if (columns != null)
+                level.RemoveChild(columns);
+        }
+        else
+        {
+            XmlElement levelElem = _saveX.CreateElement("currentLevel");
+            xml.AppendChild(levelElem);
+            level = levelElem;
+        }
         //создаем новое сохранение
-        XmlElement levelElem = _saveX.CreateElement("currentLevel");
         for (int i = 0; i < chipsOnTable.Count; i++)
         {
             XmlElement chipElem = _saveX.CreateElement("chip");
@@ -98,14 +113,14 @@ public class XMLSaver : MonoBehaviour
 
             colorAtt.AppendChild(colorText);
             chipElem.Attributes.Append(colorAtt);
-            levelElem.AppendChild(chipElem);
+            level.AppendChild(chipElem);
         }
         //создаем текущую активную фишку
         XmlElement currentСhipElem = _saveX.CreateElement("currentChip");
 
         XmlAttribute isSkillAtt = _saveX.CreateAttribute("isSkill");
         XmlText isSkillText;
-        if(currentChip.GetComponent<SkillChip>())
+        if (currentChip.GetComponent<SkillChip>())
         {
             isSkillText = _saveX.CreateTextNode(1.ToString());
             SkillChip sc = currentChip.GetComponent<SkillChip>();
@@ -145,7 +160,7 @@ public class XMLSaver : MonoBehaviour
         }
         isSkillAtt.AppendChild(isSkillText);
         currentСhipElem.Attributes.Append(isSkillAtt);
-        levelElem.AppendChild(currentСhipElem);
+        level.AppendChild(currentСhipElem);
 
         //создаем список столбов (1-активный, 0-неактивный)
         XmlElement columnsElem = _saveX.CreateElement("columns");
@@ -174,74 +189,132 @@ public class XMLSaver : MonoBehaviour
         columnsElem.Attributes.Append(secondAtt);
         thirdAtt.AppendChild(thirdUpText);
         columnsElem.Attributes.Append(thirdAtt);
-        levelElem.AppendChild(columnsElem);
+        level.AppendChild(columnsElem);
+
+        //сохраняем все изменения
+        _saveX.Save(_path + "/SaveXML.xml");
+    }
+
+    public void SaveScore(int score)
+    {
+        _saveX = new XmlDocument();
+        _saveX.Load(_path + "/SaveXML.xml");
+        //удаляем старое сохранение уровня
+        XmlNode xml = _saveX.SelectSingleNode("xml");
+        XmlNode level = xml.SelectSingleNode("currentLevel");
+        if (level != null)
+        {
+            XmlNode currentScore = level.SelectSingleNode("currentScore");
+            if (currentScore != null)
+                level.RemoveChild(currentScore);
+        }
+        else
+        {
+            XmlElement levelElem = _saveX.CreateElement("currentLevel");
+            xml.AppendChild(levelElem);
+            level = levelElem;
+        }
 
         //создаем текущий счет 
         XmlElement currentScoreElem = _saveX.CreateElement("currentScore");
         XmlAttribute currentScoreAtt = _saveX.CreateAttribute("value");
-        XmlText currentScoreValueText = _saveX.CreateTextNode(ScoreController.S.GetScore().ToString());
+        XmlText currentScoreValueText = _saveX.CreateTextNode(score.ToString());
         currentScoreAtt.AppendChild(currentScoreValueText);
         currentScoreElem.Attributes.Append(currentScoreAtt);
-        levelElem.AppendChild(currentScoreElem);
+        level.AppendChild(currentScoreElem);
+
+        //сохраняем все изменения
+        _saveX.Save(_path + "/SaveXML.xml");
+    }
+
+    public void SaveSkillsFilling(float cristalFilling, float fireFilling, float frostFilling, float LightningFilling,
+        int cristalCount, int fireCount, int frostCount, int lightningCount)
+    {
+        _saveX = new XmlDocument();
+        _saveX.Load(_path + "/SaveXML.xml");
+        //удаляем старое сохранение уровня
+        XmlNode xml = _saveX.SelectSingleNode("xml");
+        XmlNode level = xml.SelectSingleNode("currentLevel");
+        if (level != null)
+        {
+            XmlNode greenSkill = level.SelectSingleNode("greenSkill");
+            if (greenSkill != null)
+                level.RemoveChild(greenSkill);
+            XmlNode redSkill = level.SelectSingleNode("redSkill");
+            if (redSkill != null)
+                level.RemoveChild(redSkill);
+            XmlNode blueSkill = level.SelectSingleNode("blueSkill");
+            if (blueSkill != null)
+                level.RemoveChild(blueSkill);
+            XmlNode purpleSkill = level.SelectSingleNode("purpleSkill");
+            if (purpleSkill != null)
+                level.RemoveChild(purpleSkill);
+        }
+        else
+        {
+            XmlElement levelElem = _saveX.CreateElement("currentLevel");
+            xml.AppendChild(levelElem);
+            level = levelElem;
+        }
 
         //создаем текущее количество и заполнение навыков
         XmlElement greenSkillElem = _saveX.CreateElement("greenSkill");
         XmlAttribute greenSkillCountAtt = _saveX.CreateAttribute("count");
         XmlAttribute greenSkillFillingAtt = _saveX.CreateAttribute("filling");
-        XmlText greenSkillCountText = _saveX.CreateTextNode(SkillsController.S.GetCount(eChipColors.green).ToString());
-        XmlText greenSkillFillingText = _saveX.CreateTextNode(SkillsController.S.GetFilling(eChipColors.green).ToString());
+        XmlText greenSkillCountText = _saveX.CreateTextNode(cristalCount.ToString());
+        XmlText greenSkillFillingText = _saveX.CreateTextNode(cristalFilling.ToString());
         greenSkillCountAtt.AppendChild(greenSkillCountText);
         greenSkillElem.Attributes.Append(greenSkillCountAtt);
         greenSkillFillingAtt.AppendChild(greenSkillFillingText);
         greenSkillElem.Attributes.Append(greenSkillFillingAtt);
-        levelElem.AppendChild(greenSkillElem);
+        level.AppendChild(greenSkillElem);
 
         XmlElement redSkillElem = _saveX.CreateElement("redSkill");
         XmlAttribute redSkillCountAtt = _saveX.CreateAttribute("count");
         XmlAttribute redSkillFillingAtt = _saveX.CreateAttribute("filling");
-        XmlText redSkillCountText = _saveX.CreateTextNode(SkillsController.S.GetCount(eChipColors.red).ToString());
-        XmlText redSkillFillingText = _saveX.CreateTextNode(SkillsController.S.GetFilling(eChipColors.red).ToString());
+        XmlText redSkillCountText = _saveX.CreateTextNode(fireCount.ToString());
+        XmlText redSkillFillingText = _saveX.CreateTextNode(fireFilling.ToString());
         redSkillCountAtt.AppendChild(redSkillCountText);
         redSkillElem.Attributes.Append(redSkillCountAtt);
         redSkillFillingAtt.AppendChild(redSkillFillingText);
         redSkillElem.Attributes.Append(redSkillFillingAtt);
-        levelElem.AppendChild(redSkillElem);
+        level.AppendChild(redSkillElem);
 
         XmlElement blueSkillElem = _saveX.CreateElement("blueSkill");
         XmlAttribute blueSkillCountAtt = _saveX.CreateAttribute("count");
         XmlAttribute blueSkillFillingAtt = _saveX.CreateAttribute("filling");
-        XmlText blueSkillCountText = _saveX.CreateTextNode(SkillsController.S.GetCount(eChipColors.blue).ToString());
-        XmlText blueSkillFillingText = _saveX.CreateTextNode(SkillsController.S.GetFilling(eChipColors.blue).ToString());
+        XmlText blueSkillCountText = _saveX.CreateTextNode(frostCount.ToString());
+        XmlText blueSkillFillingText = _saveX.CreateTextNode(frostFilling.ToString());
         blueSkillCountAtt.AppendChild(blueSkillCountText);
         blueSkillElem.Attributes.Append(blueSkillCountAtt);
         blueSkillFillingAtt.AppendChild(blueSkillFillingText);
         blueSkillElem.Attributes.Append(blueSkillFillingAtt);
-        levelElem.AppendChild(blueSkillElem);
+        level.AppendChild(blueSkillElem);
 
         XmlElement purpleSkillElem = _saveX.CreateElement("purpleSkill");
         XmlAttribute purpleSkillCountAtt = _saveX.CreateAttribute("count");
         XmlAttribute purpleSkillFillingAtt = _saveX.CreateAttribute("filling");
-        XmlText purpleSkillCountText = _saveX.CreateTextNode(SkillsController.S.GetCount(eChipColors.purple).ToString());
-        XmlText purpleSkillFillingText = _saveX.CreateTextNode(SkillsController.S.GetFilling(eChipColors.purple).ToString());
+        XmlText purpleSkillCountText = _saveX.CreateTextNode(lightningCount.ToString());
+        XmlText purpleSkillFillingText = _saveX.CreateTextNode(LightningFilling.ToString());
         purpleSkillCountAtt.AppendChild(purpleSkillCountText);
         purpleSkillElem.Attributes.Append(purpleSkillCountAtt);
         purpleSkillFillingAtt.AppendChild(purpleSkillFillingText);
         purpleSkillElem.Attributes.Append(purpleSkillFillingAtt);
-        levelElem.AppendChild(purpleSkillElem);
-
-        xml.AppendChild(levelElem);
+        level.AppendChild(purpleSkillElem);
         //сохраняем все изменения
         _saveX.Save(_path + "/SaveXML.xml");
     }
+
+
     public void UnnullTable()
     {
         _saveX = new XmlDocument();
         _saveX.Load(_path + "/SaveXML.xml");
         //удаляем старое сохранение уровня
         XmlNode xml = _saveX.SelectSingleNode("xml");
-        XmlNodeList levelNodeList = xml.SelectNodes("currentLevel");      
-        if(levelNodeList[0] != null)
-            _saveX.DocumentElement.RemoveChild(levelNodeList[0]);
+        XmlNode levelNode = xml.SelectSingleNode("currentLevel");
+        if (levelNode != null)
+            _saveX.DocumentElement.RemoveChild(levelNode);
         _saveX.Save(_path + "/SaveXML.xml");
     }
     public void SetSounds(int isOn)
@@ -249,8 +322,8 @@ public class XMLSaver : MonoBehaviour
         _saveX = new XmlDocument();
         _saveX.Load(_path + "/SaveXML.xml");
         XmlNode xml = _saveX.SelectSingleNode("xml");
-        XmlNodeList nodeList = xml.SelectNodes("settings");
-        nodeList[0].Attributes["soundsOn"].Value = isOn.ToString();
+        XmlNode node = xml.SelectSingleNode("settings");
+        node.Attributes["soundsOn"].Value = isOn.ToString();
         _saveX.Save(_path + "/SaveXML.xml");
     }
     public void SetMusic(int isOn)
@@ -258,8 +331,8 @@ public class XMLSaver : MonoBehaviour
         _saveX = new XmlDocument();
         _saveX.Load(_path + "/SaveXML.xml");
         XmlNode xml = _saveX.SelectSingleNode("xml");
-        XmlNodeList nodeList = xml.SelectNodes("settings");
-        nodeList[0].Attributes["musicOn"].Value = isOn.ToString();
+        XmlNode node = xml.SelectSingleNode("settings");
+        node.Attributes["musicOn"].Value = isOn.ToString();
         _saveX.Save(_path + "/SaveXML.xml");
     }
     public void SetMaxScore(int score)
@@ -267,8 +340,8 @@ public class XMLSaver : MonoBehaviour
         _saveX = new XmlDocument();
         _saveX.Load(_path + "/SaveXML.xml");
         XmlNode xml = _saveX.SelectSingleNode("xml");
-        XmlNodeList nodeList = xml.SelectNodes("maxScore");
-        nodeList[0].Attributes["value"].Value = score.ToString();
+        XmlNode node = xml.SelectSingleNode("maxScore");
+        node.Attributes["value"].Value = score.ToString();
         _saveX.Save(_path + "/SaveXML.xml");
     }
     public void SwitchOffAds()
@@ -276,8 +349,8 @@ public class XMLSaver : MonoBehaviour
         _saveX = new XmlDocument();
         _saveX.Load(_path + "/SaveXML.xml");
         XmlNode xml = _saveX.SelectSingleNode("xml");
-        XmlNodeList nodeList = xml.SelectNodes("settings");
-        nodeList[0].Attributes["noAddsOn"].Value = 1.ToString();
+        XmlNode node = xml.SelectSingleNode("settings");
+        node.Attributes["noAddsOn"].Value = 1.ToString();
         _saveX.Save(_path + "/SaveXML.xml");
     }
 }

@@ -2,8 +2,6 @@ using UnityEngine;
 
 public class AimLine : MonoBehaviour
 {
-    public static AimLine S;
-
     [SerializeField] private float _maxDistance = 20f;
     [SerializeField] LayerMask _bourdersLayer;
     private LineRenderer _line;
@@ -12,8 +10,6 @@ public class AimLine : MonoBehaviour
 
     private void Start()
     {
-        if (S == null)
-            S = this;
         _line = GetComponent<LineRenderer>();
         _center = Vector3.zero;
     }

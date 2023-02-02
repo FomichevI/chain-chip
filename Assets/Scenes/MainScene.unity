@@ -8640,9 +8640,6 @@ GameObject:
   - component: {fileID: 963194229}
   - component: {fileID: 963194230}
   - component: {fileID: 963194231}
-  - component: {fileID: 963194234}
-  - component: {fileID: 963194233}
-  - component: {fileID: 963194235}
   - component: {fileID: 963194232}
   m_Layer: 0
   m_Name: Main Camera
@@ -8731,6 +8728,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ChipsOnTable: []
   IsFailing: 0
+  _aimLine: {fileID: 1968970737}
   _shootForce: 500
   _chipPrefab: {fileID: 821549885831176415, guid: 52681f487bf8f654fb7898e74a18cb9c, type: 3}
   _fireChipPrefab: {fileID: 2764449311368786370, guid: c9df5c5abb5fc8642b27ebcc92062531, type: 3}
@@ -8782,43 +8780,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 963194225}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3370bc7ada84be14e88453cab815ab8d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &963194233
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 963194225}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 16d889d93437fdd43a36789c63b1c871, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &963194234
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 963194225}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 10af0523a83d1a34cbc2d805ae72bc2d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &963194235
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 963194225}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a715166a3c055f043a6883aec1cd1910, type: 3}
+  m_Script: {fileID: 11500000, guid: 3d05cf450b5e29849babbabb7e549d7c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &969167257
@@ -12559,7 +12521,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bdcbf34624457cf4892e8c29248630d3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MaxFillingSkills: 25
   _fireFillingImg: {fileID: 28298835}
   _frostFillingImg: {fileID: 146963629}
   _lightningFillingImg: {fileID: 1851946888}
@@ -12588,7 +12549,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: acb28f14f32b3c846b5ff0ab4b7144ad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  LastSkillColor: 4
   _nextStagePanel: {fileID: 697086161}
   _newSkillPanel: {fileID: 1569314309}
   _losePanel: {fileID: 969167257}
@@ -13235,7 +13195,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 963194233}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: ThemeChanger, Assembly-CSharp
         m_MethodName: SetNextBg
         m_Mode: 1

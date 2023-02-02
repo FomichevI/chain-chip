@@ -76,6 +76,7 @@
     <Compile Include="Assets\Effects\JMO Assets\Cartoon FX\Scripts\CFX_LightFlicker.cs" />
     <Compile Include="Assets\Effects\JMO Assets\Cartoon FX\Scripts\CFX_AutoDestructShuriken.cs" />
     <Compile Include="Assets\Scripts\XmlReader.cs" />
+    <Compile Include="Assets\Scripts\EventAggregator.cs" />
     <Compile Include="Assets\Scripts\PlusScore.cs" />
     <Compile Include="Assets\Scripts\Chip.cs" />
     <Compile Include="Assets\Scripts\EffectsController.cs" />

@@ -78,7 +78,7 @@ public class LightningSkill : SkillChip
         if (_targets.Count > 0)
             _lightningScript.EndPosition = new Vector3(_targets[0].gameObject.transform.position.x, _targets[0].gameObject.transform.position.y + 0.25f, _targets[0].gameObject.transform.position.z);
         StartCoroutine(DestroyAllTargest());
-        AudioManager.S.PlayLightningHit();
+        EventAggregator.UseLightning.Invoke();
     }
 
     IEnumerator DestroyAllTargest()
@@ -113,7 +113,7 @@ public class LightningSkill : SkillChip
                 {
                     if (_targets[0] != null) //одна из целей может удалиться раньше, чем до нее дойдет цепная молния, в этом случае нужна проверка
                     {
-                        ScoreController.S.RaiseScore(_targets[0].СhipValue, _targets[0].transform.position, _targets[0].СhipColor);
+                        EventAggregator.ChipUnification.Invoke(_targets[0].СhipValue, _targets[0].transform.position, _targets[0].СhipColor);
                         _targets[0].DestroyGO();
                     }
                     else

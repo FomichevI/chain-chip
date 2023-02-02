@@ -37,15 +37,14 @@ public class CristalSkill : SkillChip
         {
             if (_currentTargets < _maxTargets)
             {
-                ScoreController.S.RaiseScore(col.gameObject.GetComponent<Chip>().СhipValue, col.transform.position, col.gameObject.GetComponent<Chip>().СhipColor);
+                EventAggregator.ChipUnification.Invoke(col.gameObject.GetComponent<Chip>().СhipValue, col.transform.position, col.gameObject.GetComponent<Chip>().СhipColor);
+                EventAggregator.UnificationSound.Invoke();
                 col.gameObject.GetComponent<Chip>().DestroyGO();
-                AudioManager.S.PlayUnification();
                 _currentTargets++;
             }
             else
             {
-                EffectsController.S.ShowCristalHitEffect(transform.position);
-                AudioManager.S.PlayCristalBreak();
+                EventAggregator.DestroyCristal.Invoke(transform.position);
                 Destroy(gameObject);
             }
         }
@@ -55,8 +54,7 @@ public class CristalSkill : SkillChip
     {
         if (col.gameObject.layer == 6) //если происходит столкновение со стенкой
         {
-            EffectsController.S.ShowCristalHitEffect(transform.position);
-            AudioManager.S.PlayCristalBreak();
+            EventAggregator.DestroyCristal.Invoke(transform.position);
             Destroy(gameObject);
         }
     }

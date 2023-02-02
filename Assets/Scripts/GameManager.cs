@@ -10,6 +10,7 @@ public class GameManager : MonoBehaviour
     [HideInInspector] public List<GameObject> ChipsOnTable;
     [HideInInspector] public bool IsFailing = false;
 
+    [SerializeField] private AimLine _aimLine;
     [SerializeField] private float _shootForce = 500; //сила запуска фишки
     [SerializeField] private GameObject _chipPrefab;
     [SerializeField] private GameObject _fireChipPrefab;
@@ -47,11 +48,6 @@ public class GameManager : MonoBehaviour
             GenerateStartLevel();
         }
     }
-
-    private void Start()
-    {
-    }
-
     private void GenerateStartLevel()
     {
         AddChip(new Vector3(-1.9f, 0.5f, 9f), 1, eChipColors.red);
@@ -87,7 +83,7 @@ public class GameManager : MonoBehaviour
                 }
             }
             if (_currentChip != null)
-                AimLine.S.SetTarget(_currentChip.transform);
+                _aimLine.SetTarget(_currentChip.transform);
         }
 
         if (Input.GetMouseButton(0) && _currentChip != null) //если мы уже удерживаем фишку, то перемещаем ее вслед за курсором
@@ -115,7 +111,7 @@ public class GameManager : MonoBehaviour
             }
             //огранечение скорости перемещения фишки
             _currentChip.GetComponent<Rigidbody>().MovePosition(Vector3.MoveTowards(_currentChip.transform.position, mousePosition, 0.3f));
-            AimLine.S.ShowLine(_startPos); //обновляем линию прицеливания
+            _aimLine.ShowLine(_startPos); //обновляем линию прицеливания
         }
 
         if (Input.GetMouseButtonUp(0) && _currentChip != null) //если отпустили кнопку, то запускаем фишку на игровое поле
@@ -143,8 +139,8 @@ public class GameManager : MonoBehaviour
 
             _currentChip = null;
             StartCoroutine(SpawnNewChip());
-            AimLine.S.HideLine();
-            AudioManager.S.PlayFly();
+            _aimLine.HideLine();
+            EventAggregator.ThrowChip.Invoke();
         }
     }
 
@@ -157,7 +153,7 @@ public class GameManager : MonoBehaviour
             SetStartChip();
             XMLSaver.S.SaveTable(ChipsOnTable, _chipOnStartPosition, new bool[3] { _columnControllers[0].IsUp, _columnControllers[1].IsUp, _columnControllers[2].IsUp });
             //Records.S.AddInRecords(ScoreController.S.GetScore());
-            MenuManager.S.ShowNewSkillPanel();
+            EventAggregator.AddNewSkill.Invoke();
         }
     }
 
@@ -205,9 +201,21 @@ public class GameManager : MonoBehaviour
         XMLSaver.S.SaveTable(ChipsOnTable, _chipOnStartPosition, new bool[3] { _columnControllers[0].IsUp, _columnControllers[1].IsUp, _columnControllers[2].IsUp });
     }
 
-    public void RiseColumn(int count)
+    public void StartNewStage(int stage)
     {
-        MenuManager.S.ShowNextStagePanel();
+        if (stage % 4 == 1)        
+            RiseColumn(1);        
+        else if (stage % 4 == 2)        
+            RiseColumn(2);        
+        else if (stage % 4 == 3)        
+            RiseColumn(3);        
+        else if (stage % 4 == 0)        
+            RiseColumn(0);
+        EventAggregator.NewStage.Invoke();
+    }
+
+    private void RiseColumn(int count)
+    {
         DropAllColumns();
 
         if (count == 1)
