@@ -3,13 +3,19 @@ using TMPro;
 
 public class ScoreController : MonoBehaviour
 {
+    public static ScoreController S;
     [SerializeField] private TextMeshProUGUI _scoreText;
     [SerializeField] private GameObject _plusScorePrefab;
     private int _scoreBitwinStages = 25;
     private int _score = 0;
     private int _stage = 0;
 
-    private void Start()
+    private void Awake()
+    {
+        if (S == null)
+            S = this;
+    }
+    public void Init()
     {
         SetScoreAndStage(XmlReader.S.GetScore());
     }

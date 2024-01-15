@@ -13,6 +13,9 @@ public class AudioManager : MonoBehaviour
     [SerializeField] private AudioClip _fillingAc;
     [SerializeField] private AudioClip _cristalBreakAc;
 
+    private float _curentMusicVolume = 1;
+    private float _curentSoundsVolume = 1;
+
     private void OnEnable()
     {
         EventAggregator.UnificationSound.AddListener(PlayUnification);
@@ -23,6 +26,8 @@ public class AudioManager : MonoBehaviour
         EventAggregator.SetSoundsVolume.AddListener(SetSoundsVolume);
         EventAggregator.ThrowChip.AddListener(PlayFly);
         EventAggregator.SkillFilled.AddListener(PlayFilling);
+        EventAggregator.StopPlaySounds.AddListener(StopAllSounds);
+        EventAggregator.ContinuePlaySounds.AddListener(StartAllSounds);
     }
     private void OnDisable()
     {
@@ -34,6 +39,8 @@ public class AudioManager : MonoBehaviour
         EventAggregator.SetSoundsVolume.RemoveListener(SetSoundsVolume);
         EventAggregator.ThrowChip.RemoveListener(PlayFly);
         EventAggregator.SkillFilled.RemoveListener(PlayFilling);
+        EventAggregator.StopPlaySounds.RemoveListener(StopAllSounds);
+        EventAggregator.ContinuePlaySounds.RemoveListener(StartAllSounds);
     }
 
     public void PlayUnification()
@@ -64,11 +71,22 @@ public class AudioManager : MonoBehaviour
     public void SetMusicVolume(float volume)
     {
         _musicAs.volume = volume;
+        _curentMusicVolume = volume;
     }
     public void SetSoundsVolume(float volume)
     {
         _effectAs.volume = volume;
         _unificationAs.volume = volume;
         _uiEffectsAs.volume = volume;
+        _curentSoundsVolume = volume;
+    }
+    public void StopAllSounds()
+    {
+        _musicAs.volume = _effectAs.volume = _unificationAs.volume = _uiEffectsAs.volume = 0;
+    }
+    public void StartAllSounds()
+    {
+        _musicAs.volume = _curentMusicVolume;
+        _effectAs.volume = _unificationAs.volume = _uiEffectsAs.volume = _curentSoundsVolume;
     }
 }

@@ -41,5 +41,9 @@ public class EventAggregator : MonoBehaviour
     public static UnityEvent UseLightning = new UnityEvent();
     public static UnityEvent ThrowChip = new UnityEvent();
     public static UnityEvent Lose = new UnityEvent();
+    public static UnityEvent SetRussianLanguage = new UnityEvent();
     public static FullSkillEvent SkillFilled = new FullSkillEvent();
+    public static UnityEvent StopPlaySounds = new UnityEvent();
+    public static UnityEvent ContinuePlaySounds = new UnityEvent();
+    public static UnityEvent Init = new UnityEvent();
 }

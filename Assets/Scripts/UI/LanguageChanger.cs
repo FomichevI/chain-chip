@@ -9,6 +9,7 @@ public class LanguageChanger : MonoBehaviour
     [SerializeField] private TextMeshProUGUI _praise2Text;
     [SerializeField] private TextMeshProUGUI _praise3Text;
     [SerializeField] private TextMeshProUGUI _praise4Text;
+    [SerializeField] private TextMeshProUGUI _rateUsText;
     [Header("New Skill Panel")]
     [SerializeField] private TextMeshProUGUI _yourRewardText;
     [SerializeField] private TextMeshProUGUI _noThanksText;
@@ -38,12 +39,20 @@ public class LanguageChanger : MonoBehaviour
 
     void Awake()
     {
-        if (Application.systemLanguage == SystemLanguage.Russian || Application.systemLanguage == SystemLanguage.Ukrainian || Application.systemLanguage == SystemLanguage.Belarusian)
-            SetRussian();
+        //if (Application.systemLanguage == SystemLanguage.Russian || Application.systemLanguage == SystemLanguage.Ukrainian || Application.systemLanguage == SystemLanguage.Belarusian)
+        //    SetRussian();
+        EventAggregator.SetRussianLanguage.AddListener(SetRussian);
+    }
+
+    private void OnDisable()
+    {
+        EventAggregator.SetRussianLanguage.RemoveListener(SetRussian);
     }
 
     private void SetRussian()
     {
+        Debug.Log("Устанавливаем русский язык");
+
         _nextStageText.text = "Новая стадия!";
         _yourRewardText.text = "Награда:";
         _noThanksText.text = "Нет, спасибо";
@@ -60,16 +69,17 @@ public class LanguageChanger : MonoBehaviour
         _wantToRestartText.text = "Хотите начать сначала?";
         _yesText.text = "Да";
         _noText.text = "Нет";
-        _rulesPage1Text.text = "Объединяйте фишки с одинаковыми цветом и значением, чтобы получать очки и заряжать соответствующие супер-фишки";
-        _rulesPage2Text.text = "Кристаллическая супер-фишка уничтожает несколько фишек в направлении своего движения";
-        _rulesPage3Text.text = "Ледяная супер-фишка уничтожает одну фишку на поле и полностью заряжает соответствующую ей супер-фишку";
-        _rulesPage4Text.text = "Электрическая супер-фишка уничтожает несколько фишек по цепи";
-        _rulesPage5Text.text = "Огненная супер-фишка уничтожает все фишки в области своего взрыва";
+        _rulesPage1Text.text = "Объединяйте фишки с одинаковыми цветом и значением, чтобы получать очки и заряжать соответствующие умения";
+        _rulesPage2Text.text = "Кристаллическое умение уничтожает несколько фишек в направлении своего движения";
+        _rulesPage3Text.text = "Ледяное умение уничтожает одну фишку на поле, давая в 3 раза больше очков, и полностью заряжает соответствующее ей умение";
+        _rulesPage4Text.text = "Электрическое умение уничтожает несколько фишек по цепи";
+        _rulesPage5Text.text = "Огненное умение уничтожает все фишки в области своего взрыва";
         _rulesPage6Text.text = "Со временем на поле появляются колонны, усложняющие игру";
         _praise1Text.text = "Продолжай в том же духе!";
         _praise2Text.text = "Хороший результат!";
         _praise3Text.text = "Отлично!";
         _praise4Text.text = "Молодец!";
+        _rateUsText.text = "Оценить";
     }
     private void SetEnglish()
     {

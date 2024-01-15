@@ -61,7 +61,7 @@ public class ManualController : MonoBehaviour
             _pages[_currentPageIndex].SetActive(true);
         }
     }
-    public void SetStartPage()
+    public void StartPage()
     {
         foreach (GameObject go in _pages)
             go.SetActive(false);

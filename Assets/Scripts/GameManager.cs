@@ -35,18 +35,39 @@ public class GameManager : MonoBehaviour
         if (S == null)
             S = this;
 
-        _startPos = new Vector3(0, 0.5f, 0);
+        _startPos = new Vector3(0, 0.5f, 0);        
+    }
+    private void Start()
+    {
+        if (DataManager.S.IsGameFirstLoaded)
+            StartCoroutine(DataManager.S.Starting());
+    }
+    private void OnEnable()
+    {
+        EventAggregator.Init.AddListener(InitLevel);
+    }
+    private void OnDisable()
+    {
+        EventAggregator.Init.RemoveListener(InitLevel);
+    }
+
+    private void InitLevel()
+    {
         if (XmlReader.S.HasSave())
         {
+            Debug.Log("3");
             LoadLevel();
         }
         else
         {
+            Debug.Log("2");
             GameObject chipGO = Instantiate(_chipPrefab, _startPos, Quaternion.Euler(Vector3.zero));
             chipGO.GetComponent<Chip>().SetColorAndValue();
             _chipOnStartPosition = chipGO;
             GenerateStartLevel();
         }
+        ScoreController.S.Init();
+        MenuManager.S.InitSounds();
     }
     private void GenerateStartLevel()
     {
@@ -55,7 +76,6 @@ public class GameManager : MonoBehaviour
         AddChip(new Vector3(0.7f, 0.5f, 9f), 1, eChipColors.green);
         AddChip(new Vector3(1.9f, 0.5f, 6.5f), 1, eChipColors.blue);
     }
-
     void Update()
     {
         if (Input.GetMouseButtonDown(0)) //если мы только что нажали, то захватываем фишку под курсором

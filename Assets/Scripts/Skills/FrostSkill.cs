@@ -6,7 +6,7 @@ public class FrostSkill : SkillChip
     {
         if (col.gameObject.layer == 3)
         {
-            EventAggregator.ChipUnification.Invoke(col.gameObject.GetComponent<Chip>().СhipValue * 2, col.transform.position, col.gameObject.GetComponent<Chip>().СhipColor);
+            EventAggregator.ChipUnification.Invoke(col.gameObject.GetComponent<Chip>().СhipValue * 3, col.transform.position, col.gameObject.GetComponent<Chip>().СhipColor);
             EventAggregator.UnificationSound.Invoke();
             EventAggregator.FullSkill.Invoke(col.gameObject.GetComponent<Chip>().СhipColor);
             EventAggregator.DestroyFrost.Invoke(transform.position);

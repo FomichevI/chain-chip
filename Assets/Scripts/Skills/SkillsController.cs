@@ -4,7 +4,9 @@ using TMPro;
 
 public class SkillsController : MonoBehaviour
 {
-    public readonly int MaxFillingSkills = 25;
+
+
+    public readonly int MaxFillingSkills = 30;
     //image для отображения заполнения скиллов
     [SerializeField] private Image _fireFillingImg;
     [SerializeField] private Image _frostFillingImg;
@@ -37,13 +39,15 @@ public class SkillsController : MonoBehaviour
     {
         EventAggregator.IncreaseSkillFilling.AddListener(IncreaseSkillFilling);
         EventAggregator.FullSkill.AddListener(FullSkill);
+        EventAggregator.Init.AddListener(Init);
     }
     private void OnDisable()
     {
         EventAggregator.IncreaseSkillFilling.RemoveListener(IncreaseSkillFilling);
         EventAggregator.FullSkill.RemoveListener(FullSkill);
+        EventAggregator.Init.RemoveListener(Init);
     }
-    private void Start()
+    private void Init()
     {
         //заргужаем заполнение скиллов
         int[,] countAndFilling = new int[2, 4];
